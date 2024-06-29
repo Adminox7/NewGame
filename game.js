@@ -18,7 +18,7 @@ class startGame extends Phaser.Scene {
     super({ key: 'startGame' });
     this.m = 'nomeut';
     this.x = 'music';
-    this.click = 1;
+    this.click = 2;
   }
 
   preload() {
@@ -39,11 +39,11 @@ class startGame extends Phaser.Scene {
     this.start.setInteractive({ useHandCursor: true });
     this.start.on('pointerdown', () => this.startGame());
 
-    this.meut = this.add.image(750, 105, 'nomeut').setScale(0.035);
+    this.meut = this.add.image(750, 50, 'nomeut').setScale(0);
     this.meut.setInteractive({ useHandCursor: true });
     this.meut.on('pointerdown', () => this.clickMeut());
 
-    this.music = this.add.image(750, 150, 'music').setScale(1);
+    this.music = this.add.image(750, 50, 'music').setScale(0);
     this.music.setInteractive({ useHandCursor: true });
     this.music.on('pointerdown', () => this.clickMusic());
 
@@ -64,6 +64,7 @@ class startGame extends Phaser.Scene {
   parametreGame() {
     this.clickeff.play();
 
+  
     this.tweens.add({
       targets: this.parametre,
       angle: 180,
@@ -85,8 +86,11 @@ class startGame extends Phaser.Scene {
           });
         }
       });
+      
       this.click = 2;
     } else if (this.click === 2) {
+      this.music.setScale(1)
+      this.meut.setScale(0.035)
       this.tweens.add({
         targets: this.meut,
         y: 105,
@@ -99,6 +103,7 @@ class startGame extends Phaser.Scene {
           });
         }
       });
+
       this.click = 1;
     }
   }
