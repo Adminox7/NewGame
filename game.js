@@ -149,6 +149,10 @@ class Malabis extends Phaser.Scene {
 
     // Références aux images actuelles
     this.currentImages = [];
+
+    this.m = 'nomeut';
+    this.x = 'music';
+    this.click = 2;
   }
 
   preload() {
@@ -157,6 +161,13 @@ class Malabis extends Phaser.Scene {
     this.load.image('flish-left', './assets/flish-left.png');
     this.load.image('flish-right', './assets/flish-right.png');
     this.load.image('caracter', './assets/1x/Fichier 1.png');
+    this.load.image('parametre', './assets/parametre.png');
+    this.load.image('meut', './assets/meut.png');
+    this.load.image('nomeut', './assets/nomeut.png');
+    this.load.image('music', './assets/music.png');
+    this.load.image('nomusic', './assets/nomusic.png');
+    this.load.audio('clickeff', './assets/clickeff.wav');
+    this.load.image('valide','./assets/valide.png')
 
     // HAIR
     this.load.image('HAIR1', './assets/1x/HAIR 1.png');
@@ -209,6 +220,23 @@ class Malabis extends Phaser.Scene {
 
     // Initial load of images
     this.updateImages();
+
+    this.meut = this.add.image(750, 50, 'nomeut').setScale(0);
+    this.meut.setInteractive({ useHandCursor: true });
+    this.meut.on('pointerdown', () => this.clickMeut());
+
+    this.music = this.add.image(750, 50, 'music').setScale(0);
+    this.music.setInteractive({ useHandCursor: true });
+    this.music.on('pointerdown', () => this.clickMusic());
+
+    this.parametre = this.add.image(750, 50, 'parametre').setScale(1);
+    this.parametre.setInteractive({ useHandCursor: true });
+    this.parametre.on('pointerdown', () => this.parametreGame());
+
+    this.clickeff = this.sound.add('clickeff');
+
+    this.valide = this.add.image(100,450,'valide').setScale(0.05);
+    this.valide.setInteractive({useHandCursor:true})
   }
 
   updateImages() {
@@ -311,6 +339,74 @@ class Malabis extends Phaser.Scene {
   ChangeShoes(sho) {
     this.sabat.setTexture(sho);
     this.sabat.setPosition(1132.5 / 2, 880 / 2);
+  }
+
+  parametreGame() {
+    this.clickeff.play();
+    this.tweens.add({
+      targets: this.parametre,
+      angle: 180,
+      duration: 300,
+      ease: 'Linear',
+      yoyo: true,
+    });
+
+    if (this.click === 1) {
+      this.tweens.add({
+        targets: this.meut,
+        y: 50,
+        duration: 500,
+        onComplete: () => {
+          this.tweens.add({
+            targets: this.music,
+            y: 50,
+            duration: 500,
+          });
+        }
+      });
+      
+      this.click = 2;
+    } else if (this.click === 2) {
+      this.music.setScale(1)
+      this.meut.setScale(0.035)
+      this.tweens.add({
+        targets: this.meut,
+        y: 105,
+        duration: 500,
+        onComplete: () => {
+          this.tweens.add({
+            targets: this.music,
+            y: 150,
+            duration: 500,
+          });
+        }
+      });
+
+      this.click = 1;
+    }
+  }
+
+  clickMeut() {
+    if (this.m === 'nomeut') {
+      this.meut.setTexture('meut').setScale(1);
+      this.m = 'meut';
+    } else if (this.m === 'meut') {
+      this.meut.setTexture('nomeut').setScale(0.035);
+      this.m = 'nomeut';
+    }
+  }
+
+  clickMusic() {
+    if (this.x === 'music') {
+      this.music.setTexture('nomusic');
+      this.x = 'nomusic';
+      this.clickeff.setMute(true);
+    } else if (this.x === 'nomusic') {
+      this.music.setTexture('music');
+      this.x = 'music';
+      this.clickeff.setMute(false);
+      this.clickeff.play();
+    }
   }
 }
 
