@@ -167,29 +167,26 @@ class Malabis extends Phaser.Scene {
     this.load.image('music', './assets/music.png');
     this.load.image('nomusic', './assets/nomusic.png');
     this.load.audio('clickeff', './assets/clickeff.wav');
+    this.load.audio('cute', './assets/cute.wav');
     this.load.image('valide','./assets/valide.png')
 
     // HAIR
-    this.load.image('HAIR1', './assets/1x/HAIR 1.png');
-    this.load.image('HAIR2', './assets/1x/HAIR 2.png');
-    this.load.image('HAIR3', './assets/1x/HAIR 3.png');
-    this.load.image('HAIR4', './assets/1x/HAIR 4.png');
-    this.load.image('HAIR5', './assets/1x/HAIR 5.png');
-    this.load.image('HAIR6', './assets/1x/HAIR 6.png');
+    for (let i = 1; i <= 6; i++) {
+      this.load.image(`HAIR${i}`, `./assets/1x/HAIR ${i}.png`);
+    }
     //clothes
-    this.load.image('clothes1', './assets/1x/clothes 1.png');
-    this.load.image('clothes2', './assets/1x/clothes 2.png');
-    this.load.image('clothes3', './assets/1x/clothes 3.png');
-    this.load.image('clothes4', './assets/1x/clothes 4.png');
-    this.load.image('clothes5', './assets/1x/clothes 5.png');
-    this.load.image('clothes6', './assets/1x/clothes 6.png');
+    for (let i = 1; i <= 6; i++) {
+      this.load.image(`clothes${i}`, `./assets/1x/clothes ${i}.png`);
+    }
     //shoes 
-    this.load.image('shoes1', './assets/1x/shoes 1.png');
-    this.load.image('shoes2', './assets/1x/shoes 2.png');
-    this.load.image('shoes3', './assets/1x/shoes 3.png');
-    this.load.image('shoes4', './assets/1x/shoes 4.png');
-    this.load.image('shoes5', './assets/1x/shoes 5.png');
-    this.load.image('shoes6', './assets/1x/shoes 6.png');
+    for (let i = 1; i <= 6; i++) {
+      this.load.image(`shoes${i}`, `./assets/1x/shoes ${i}.png`);
+    }
+
+    this.load.image('bgStage', './assets/stage/bgStage.jpg');
+    for (let i = 1; i <= 10; i++) {
+      this.load.image(`stage${i}`, `./assets/stage/stage${i}.png`);
+    }
   }
 
   create() {
@@ -234,9 +231,11 @@ class Malabis extends Phaser.Scene {
     this.parametre.on('pointerdown', () => this.parametreGame());
 
     this.clickeff = this.sound.add('clickeff');
+    this.cute = this.sound.add('cute')
 
-    this.valide = this.add.image(100,450,'valide').setScale(0.05);
+    this.valide = this.add.image(30,480,'valide').setScale(0.08);
     this.valide.setInteractive({useHandCursor:true})
+    this.valide.on('pointerdown', () => this.valider());
   }
 
   updateImages() {
@@ -285,11 +284,13 @@ class Malabis extends Phaser.Scene {
   clickRight() {
     this.fin = (this.fin + 1) % this.swith.length;
     this.updateImages();
+    this.clickeff.play();
   }
 
   clickLeft() {
     this.fin = (this.fin - 1 + this.swith.length) % this.swith.length;
     this.updateImages();
+    this.clickeff.play();
   }
 
   ChangeClothes(clothes) {
@@ -312,6 +313,7 @@ class Malabis extends Phaser.Scene {
       this.image1.setTexture(clothes);
       this.image1.setPosition(1103/2,635/2);
     }    
+    this.cute.play();
   }
 
   ChangeHair(hair) {
@@ -334,11 +336,13 @@ class Malabis extends Phaser.Scene {
       this.cha3r.setTexture(hair);
       this.cha3r.setPosition(1107 / 2, 339.8 / 2);
     }
+    this.cute.play();
   }
 
   ChangeShoes(sho) {
     this.sabat.setTexture(sho);
     this.sabat.setPosition(1132.5 / 2, 880 / 2);
+    this.cute.play();
   }
 
   parametreGame() {
@@ -407,6 +411,34 @@ class Malabis extends Phaser.Scene {
       this.clickeff.setMute(false);
       this.clickeff.play();
     }
+  }
+  valider(){
+    this.add.image(200,200,'bgStage').setScale(0.2)
+    
+    for (let index = 0; index <= 10; index++) {
+      var x = 100 * index
+      var y = 150
+
+      if (index >= 4) {
+        x = x - 270
+         y = 250
+      }if ( index >= 6) {
+        x = x - 270
+         y = 350
+      }if ( index >= 9) {
+        x = x - 270
+         y = 450
+      }
+      
+      this.stage = this.add.image(x,y,'stage'+index).setScale(0.2);
+      this.stage.setInteractive({useHandCursor:true})
+      this.stage.on('pointerdown', () => this.valid());
+      
+    }
+    this.clickeff.play();
+  }
+  valid (){
+    this.scene.start('Malabis');
   }
 }
 
