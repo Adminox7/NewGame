@@ -419,22 +419,23 @@ class Malabis extends Phaser.Scene {
     
     for (let index = 0; index <= 10; index++) {
       var x = 100 * index
-      var y = 150
+      var y = 100
 
       if (index >= 4) {
         x = x - 270
-         y = 250
+         y = 200
       }if ( index >= 6) {
         x = x - 270
-         y = 350
+         y = 300
       }if ( index >= 9) {
         x = x - 270
-         y = 450
+         y = 400
       }
       
       this.stage = this.add.image(x,y,'stage'+index).setScale(0.2);
       this.stage.setInteractive({useHandCursor:true})
       this.stage.on('pointerdown', () => this.valid());
+      this.stage.setTint(0x808080);
       
     }
     this.clickeff.play();
