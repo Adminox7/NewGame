@@ -437,12 +437,14 @@ class Malabis extends Phaser.Scene {
       this.stage.on('pointerdown', () => this.valid());
       this.stage.setTint(0x808080);
       
+      
     }
-    
+
     this.clickeff.play();
   }
   valid (){
     this.scene.start('Malabis');
+    this.clickeff.play();
   }
 }
 
