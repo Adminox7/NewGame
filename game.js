@@ -405,10 +405,12 @@ class Malabis extends Phaser.Scene {
       this.music.setTexture('nomusic');
       this.x = 'nomusic';
       this.clickeff.setMute(true);
+      this.cute.setMute(true);
     } else if (this.x === 'nomusic') {
       this.music.setTexture('music');
       this.x = 'music';
       this.clickeff.setMute(false);
+      this.cute.setMute(false);
       this.clickeff.play();
     }
   }
