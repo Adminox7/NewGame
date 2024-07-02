@@ -1,3 +1,4 @@
+
 const config = {
   type: Phaser.AUTO,
   width: 800,
@@ -153,6 +154,7 @@ class Malabis extends Phaser.Scene {
     this.m = 'nomeut';
     this.x = 'music';
     this.click = 2;
+    this.stagenum = 0;
   }
 
   preload() {
@@ -190,6 +192,7 @@ class Malabis extends Phaser.Scene {
   }
 
   create() {
+
     this.add.image(800 / 2, 500 / 2, 'room').setScale(0.24);
     this.vit = this.add.image(600 / 2, 600 / 2, 'vitrine').setScale(0.9);
     this.vit.skew = 45;
@@ -236,6 +239,8 @@ class Malabis extends Phaser.Scene {
     this.valide = this.add.image(30,480,'valide').setScale(0.08);
     this.valide.setInteractive({useHandCursor:true})
     this.valide.on('pointerdown', () => this.valider());
+
+    
   }
 
   updateImages() {
@@ -416,33 +421,35 @@ class Malabis extends Phaser.Scene {
   }
   valider(){
     this.add.image(200,200,'bgStage').setScale(0.2)
-    
+    this.stagenum += 1;
     for (let index = 0; index <= 10; index++) {
-      var x = 100 * index
-      var y = 100
-
-      if (index >= 4) {
-        x = x - 270
-         y = 200
-      }if ( index >= 6) {
-        x = x - 270
-         y = 300
-      }if ( index >= 9) {
-        x = x - 270
-         y = 400
+      let x = 100 * index;
+      let y = 100;
+  
+      if (index >= 9) {
+          x -= 810;
+          y = 400;
+      } else if (index >= 6) {
+          x -= 540;
+          y = 300;
+      } else if (index >= 4) {
+          x -= 270;
+          y = 200;
       }
-      
-      this.stage = this.add.image(x,y,'stage'+index).setScale(0.2);
-      this.stage.setInteractive({useHandCursor:true})
-      this.stage.on('pointerdown', () => this.valid());
+  
+      this.stage = this.add.image(x, y, 'stage' + index).setScale(0.2);
+      // this.stage.setInteractive({ useHandCursor: true });
+      this.stage.on('pointerdown', () => this.validSt());
       this.stage.setTint(0x808080);
-      
-      
-    }
-
+     
+      if (this.stage.texture.key == 'stage' + this.stagenum) {
+          this.stage.setInteractive({ useHandCursor: true });
+          this.stage.clearTint();
+      }
+  }
     this.clickeff.play();
   }
-  valid (){
+  validSt (){
     this.scene.start('Malabis');
     this.clickeff.play();
   }
