@@ -191,56 +191,7 @@ class Malabis extends Phaser.Scene {
 
   create() {
 
-    this.add.image(800 / 2, 500 / 2, 'room').setScale(0.24);
-    this.vit = this.add.image(600 / 2, 600 / 2, 'vitrine').setScale(0.9);
-    this.vit.skew = 45;
-
-    this.add.image(1100 / 2, 600 / 2, 'caracter').setScale(0.7);
-
-   
-    // Charger l'état du personnage depuis le localStorage
-    
-    // clothes 
-    this.image1 = this.add.image(1100 / 2, 624 / 2, 'clothes1').setScale(0.7);
-
-   
-
-    // HAIR
-    this.cha3r = this.add.image(1110 / 2, 397 / 2, 'HAIR1').setScale(0.7);
-
-    // shoes
-    this.sabat = this.add.image(1132.5 / 2, 880 / 2, 'shoes1').setScale(0.7);
-
-    //action flish
-    this.flish_right = this.add.image(683 / 2, 932 / 2, 'flish-right');
-    this.flish_right.setInteractive({ useHandCursor: true });
-    this.flish_right.on('pointerdown', () => this.clickRight());
-
-    this.flish_left = this.add.image(533 / 2, 940 / 2, 'flish-left');
-    this.flish_left.setInteractive({ useHandCursor: true });
-    this.flish_left.on('pointerdown', () => this.clickLeft());
-
-    // Initial load of images
-    this.updateImages();
-
-    this.meut = this.add.image(750, 50, 'nomeut').setScale(0);
-    this.meut.setInteractive({ useHandCursor: true });
-    this.meut.on('pointerdown', () => this.clickMeut());
-
-    this.music = this.add.image(750, 50, 'music').setScale(0);
-    this.music.setInteractive({ useHandCursor: true });
-    this.music.on('pointerdown', () => this.clickMusic());
-
-    this.parametre = this.add.image(750, 50, 'parametre').setScale(1);
-    this.parametre.setInteractive({ useHandCursor: true });
-    this.parametre.on('pointerdown', () => this.parametreGame());
-
-    this.clickeff = this.sound.add('clickeff');
-    this.cute = this.sound.add('cute')
-
-    this.valide = this.add.image(30,480,'valide').setScale(0.08);
-    this.valide.setInteractive({useHandCursor:true})
-    this.valide.on('pointerdown', () => this.valider());
+    this.valider()
 
     
   }
@@ -424,7 +375,11 @@ class Malabis extends Phaser.Scene {
   valider() {
     // Afficher l'image de fond du stage
     this.add.image(200, 200, 'bgStage').setScale(0.2);
-
+     // Mise à jour du stage
+     
+    if ( this.stagenum >=1) {
+      
+   
     // Sauvegarder l'état actuel du personnage dans le localStorage
     const characterState = {
         clothes: this.image1.texture.key,
@@ -459,9 +414,8 @@ class Malabis extends Phaser.Scene {
       this.cha3r.setPosition(1107 / 2, 339.8 / 2);
     }
     this.sabat = this.add.image(1132.5 / 2, 880 / 2, characterStat.shoes).setScale(0.7);
-
-    // Mise à jour du stage
-    this.stagenum += 1;
+  }
+  this.stagenum += 1;
     for (let index = 0; index <= 10; index++) {
         let x = 100 * index;
         let y = 100;
@@ -486,12 +440,62 @@ class Malabis extends Phaser.Scene {
             this.stage.on('pointerdown', () => this.validSt());
         }
     }
-
+    
+    this.clickeff = this.sound.add('clickeff');
     this.clickeff.play();
 }
 
   validSt (){
-    this.scene.start('Malabis');
+    this.add.image(800 / 2, 500 / 2, 'room').setScale(0.24);
+    this.vit = this.add.image(600 / 2, 600 / 2, 'vitrine').setScale(0.9);
+    this.vit.skew = 45;
+
+    this.add.image(1100 / 2, 600 / 2, 'caracter').setScale(0.7);
+
+   
+    // Charger l'état du personnage depuis le localStorage
+    
+    // clothes 
+    this.image1 = this.add.image(1100 / 2, 624 / 2, 'clothes1').setScale(0.7);
+
+   
+
+    // HAIR
+    this.cha3r = this.add.image(1110 / 2, 397 / 2, 'HAIR1').setScale(0.7);
+
+    // shoes
+    this.sabat = this.add.image(1132.5 / 2, 880 / 2, 'shoes1').setScale(0.7);
+
+    //action flish
+    this.flish_right = this.add.image(683 / 2, 932 / 2, 'flish-right');
+    this.flish_right.setInteractive({ useHandCursor: true });
+    this.flish_right.on('pointerdown', () => this.clickRight());
+
+    this.flish_left = this.add.image(533 / 2, 940 / 2, 'flish-left');
+    this.flish_left.setInteractive({ useHandCursor: true });
+    this.flish_left.on('pointerdown', () => this.clickLeft());
+
+    // Initial load of images
+    this.updateImages();
+
+    this.meut = this.add.image(750, 50, 'nomeut').setScale(0);
+    this.meut.setInteractive({ useHandCursor: true });
+    this.meut.on('pointerdown', () => this.clickMeut());
+
+    this.music = this.add.image(750, 50, 'music').setScale(0);
+    this.music.setInteractive({ useHandCursor: true });
+    this.music.on('pointerdown', () => this.clickMusic());
+
+    this.parametre = this.add.image(750, 50, 'parametre').setScale(1);
+    this.parametre.setInteractive({ useHandCursor: true });
+    this.parametre.on('pointerdown', () => this.parametreGame());
+
+    this.clickeff = this.sound.add('clickeff');
+    this.cute = this.sound.add('cute')
+
+    this.valide = this.add.image(30,480,'valide').setScale(0.08);
+    this.valide.setInteractive({useHandCursor:true})
+    this.valide.on('pointerdown', () => this.valider());
     this.clickeff.play();
   }
 }
