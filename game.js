@@ -147,10 +147,8 @@ class Malabis extends Phaser.Scene {
     }
     this.swith = ['clothes', 'sbabt' ,'HAIR'];
     this.fin = 0;
-
     // Références aux images actuelles
     this.currentImages = [];
-
     this.m = 'nomeut';
     this.x = 'music';
     this.click = 2;
@@ -198,6 +196,10 @@ class Malabis extends Phaser.Scene {
     this.vit.skew = 45;
 
     this.add.image(1100 / 2, 600 / 2, 'caracter').setScale(0.7);
+
+   
+    // Charger l'état du personnage depuis le localStorage
+    
     // clothes 
     this.image1 = this.add.image(1100 / 2, 624 / 2, 'clothes1').setScale(0.7);
 
@@ -419,36 +421,75 @@ class Malabis extends Phaser.Scene {
       this.clickeff.play();
     }
   }
-  valider(){
-    this.add.image(200,200,'bgStage').setScale(0.2)
+  valider() {
+    // Afficher l'image de fond du stage
+    this.add.image(200, 200, 'bgStage').setScale(0.2);
+
+    // Sauvegarder l'état actuel du personnage dans le localStorage
+    const characterState = {
+        clothes: this.image1.texture.key,
+        hair: this.cha3r.texture.key,
+        shoes: this.sabat.texture.key,
+    };
+    localStorage.setItem('characterState', JSON.stringify(characterState));
+
+    // Charger l'état du personnage depuis le localStorage
+    const characterStat = JSON.parse(localStorage.getItem('characterState'));
+    if (characterStat) {
+        this.image1.setTexture(characterStat.clothes);
+        this.cha3r.setTexture(characterStat.hair);
+        this.sabat.setTexture(characterStat.shoes);
+    }
+
+    // Afficher le personnage avec les nouvelles textures
+    this.add.image(1100 / 2, 600 / 2, 'caracter').setScale(0.7);
+    this.image1 = this.add.image(1100 / 2, 624 / 2, characterStat.clothes).setScale(0.7);
+    this.cha3r = this.add.image(1110 / 2, 397 / 2, characterStat.hair).setScale(0.7);
+    if (characterStat.hair =='HAIR1') {
+      this.cha3r.setPosition(1110 / 2, 397 / 2);
+    } if (characterStat.hair =='HAIR2') {
+      this.cha3r.setPosition(1136 / 2, 385 / 2);
+    }if (characterStat.hair =='HAIR3') {
+      this.cha3r.setPosition(1116 / 2, 364 / 2);
+    }if (characterStat.hair =='HAIR4') {
+      this.cha3r.setPosition(1128.5 / 2, 364 / 2);
+    } if (characterStat.hair =='HAIR5') {
+      this.cha3r.setPosition(1100.5 / 2, 385.5 / 2);
+    }if (characterStat.hair =='HAIR6') {
+      this.cha3r.setPosition(1107 / 2, 339.8 / 2);
+    }
+    this.sabat = this.add.image(1132.5 / 2, 880 / 2, characterStat.shoes).setScale(0.7);
+
+    // Mise à jour du stage
     this.stagenum += 1;
     for (let index = 0; index <= 10; index++) {
-      let x = 100 * index;
-      let y = 100;
-  
-      if (index >= 9) {
-          x -= 810;
-          y = 400;
-      } else if (index >= 6) {
-          x -= 540;
-          y = 300;
-      } else if (index >= 4) {
-          x -= 270;
-          y = 200;
-      }
-  
-      this.stage = this.add.image(x, y, 'stage' + index).setScale(0.2);
-      // this.stage.setInteractive({ useHandCursor: true });
-      this.stage.on('pointerdown', () => this.validSt());
-      this.stage.setTint(0x808080);
-     
-      if (this.stage.texture.key == 'stage' + this.stagenum) {
-          this.stage.setInteractive({ useHandCursor: true });
-          this.stage.clearTint();
-      }
-  }
+        let x = 100 * index;
+        let y = 100;
+
+        if (index >= 9) {
+            x -= 810;
+            y = 400;
+        } else if (index >= 6) {
+            x -= 540;
+            y = 300;
+        } else if (index >= 4) {
+            x -= 270;
+            y = 200;
+        }
+
+        this.stage = this.add.image(x, y, 'stage' + index).setScale(0.2);
+        this.stage.setTint(0x808080);
+
+        if (this.stage.texture.key === 'stage' + this.stagenum) {
+            this.stage.setInteractive({ useHandCursor: true });
+            this.stage.clearTint();
+            this.stage.on('pointerdown', () => this.validSt());
+        }
+    }
+
     this.clickeff.play();
-  }
+}
+
   validSt (){
     this.scene.start('Malabis');
     this.clickeff.play();
