@@ -139,8 +139,43 @@ class LoadingScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('loading', './assets/loading.png');
-    // Load all assets needed for the game
+    // Afficher l'image de chargement
+    this.add.image(400, 200, 'loading');
+    this.add.image(450, 250, 'miniLatifa');
+
+    // Créer une barre de progression
+    let progressBar = this.add.graphics();
+    let progressBox = this.add.graphics();
+    progressBox.fillStyle(0x222222, 0.8);
+    progressBox.fillRect(240, 270, 320, 50);
+
+    // Afficher le texte de chargement
+    let loadingText = this.make.text({
+      x: 400,
+      y: 300,
+      text: 'Loading...',
+      style: {
+        font: '20px monospace',
+        fill: '#ffffff'
+      }
+    });
+    loadingText.setOrigin(0.5, 0.5);
+
+    // Mettre à jour la barre de progression
+    this.load.on('progress', (value) => {
+      progressBar.clear();
+      progressBar.fillStyle(0xffffff, 1);
+      progressBar.fillRect(250, 280, 300 * value, 30);
+    });
+
+    // Nettoyer une fois le chargement terminé
+    this.load.on('complete', () => {
+      progressBar.destroy();
+      progressBox.destroy();
+      loadingText.destroy();
+    });
+
+    // Charger les assets nécessaires pour le jeu
     this.load.image('room1', './assets/room.png');
     this.load.image('flish-left', './assets/flish-left.png');
     this.load.image('flish-right', './assets/flish-right.png');
@@ -152,7 +187,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('nomusic', './assets/nomusic.png');
     this.load.audio('clickeff', './assets/clickeff.wav');
     this.load.audio('cute', './assets/cute.wav');
-    this.load.image('valide','./assets/valide.png');
+    this.load.image('valide', './assets/valide.png');
 
     // HAIR
     for (let i = 1; i <= 6; i++) {
@@ -164,7 +199,7 @@ class LoadingScene extends Phaser.Scene {
       this.load.image(`clothes${i}`, `./assets/1x/labsa${i}.png`);
     }
 
-    // Shoes 
+    // Shoes
     for (let i = 1; i <= 6; i++) {
       this.load.image(`shoes${i}`, `./assets/1x/sabat${i}.png`);
     }
@@ -181,9 +216,7 @@ class LoadingScene extends Phaser.Scene {
   }
 
   create() {
-
-    this.add.image(450, 250, 'miniLatifa');
-    // Switch to the main scene once assets are loaded
+    // Passer à la scène principale une fois les assets chargés
     this.scene.start('Malabis');
   }
 }
