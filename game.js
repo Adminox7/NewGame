@@ -31,6 +31,7 @@ class startGame extends Phaser.Scene {
     this.load.image('music', './assets/music.png');
     this.load.image('nomusic', './assets/nomusic.png');
     this.load.audio('clickeff', './assets/clickeff.wav');
+    this.load.image('miniLatifa', './assets/loading/miniLatifa.png');
   }
 
   create() {
@@ -139,8 +140,9 @@ class LoadingScene extends Phaser.Scene {
   }
 
   preload() {
+    this.load.image('miniLatifa', './assets/loading/miniLatifa.png');
     // Afficher l'image de chargement
-    this.add.image(400, 200, 'loading');
+    // this.add.image(400, 200, 'loading');
     this.add.image(450, 250, 'miniLatifa');
 
     // Créer une barre de progression
