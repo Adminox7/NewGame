@@ -182,7 +182,7 @@ class LoadingScene extends Phaser.Scene {
 
   create() {
 
-    
+    this.add.image(450, 250, 'miniLatifa');
     // Switch to the main scene once assets are loaded
     this.scene.start('Malabis');
   }
