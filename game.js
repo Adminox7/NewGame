@@ -58,7 +58,7 @@ class startGame extends Phaser.Scene {
   update() {}
 
   startGame() {
-    this.scene.start('Malabis');
+    this.scene.start('LoadingScene');
     this.clickeff.play();
   }
 
@@ -133,6 +133,60 @@ class startGame extends Phaser.Scene {
   }
 }
 
+class LoadingScene extends Phaser.Scene {
+  constructor() {
+    super({ key: 'LoadingScene' });
+  }
+
+  preload() {
+    this.load.image('loading', './assets/loading.png');
+    // Load all assets needed for the game
+    this.load.image('room1', './assets/room.png');
+    this.load.image('flish-left', './assets/flish-left.png');
+    this.load.image('flish-right', './assets/flish-right.png');
+    this.load.image('caracter', './assets/1x/latifa.png');
+    this.load.image('parametre', './assets/parametre.png');
+    this.load.image('meut', './assets/meut.png');
+    this.load.image('nomeut', './assets/nomeut.png');
+    this.load.image('music', './assets/music.png');
+    this.load.image('nomusic', './assets/nomusic.png');
+    this.load.audio('clickeff', './assets/clickeff.wav');
+    this.load.audio('cute', './assets/cute.wav');
+    this.load.image('valide','./assets/valide.png');
+
+    // HAIR
+    for (let i = 1; i <= 6; i++) {
+      this.load.image(`HAIR${i}`, `./assets/1x/dra${i}.png`);
+    }
+
+    // Clothes
+    for (let i = 1; i <= 6; i++) {
+      this.load.image(`clothes${i}`, `./assets/1x/labsa${i}.png`);
+    }
+
+    // Shoes 
+    for (let i = 1; i <= 6; i++) {
+      this.load.image(`shoes${i}`, `./assets/1x/sabat${i}.png`);
+    }
+
+    // miniDara
+    for (let i = 1; i <= 6; i++) {
+      this.load.image(`miniDra${i}`, `./assets/1x/miniDra${i}.png`);
+    }
+
+    this.load.image('bgStage', './assets/stage/bgStage.jpg');
+    for (let i = 1; i <= 10; i++) {
+      this.load.image(`stage${i}`, `./assets/stage/stage${i}.png`);
+    }
+  }
+
+  create() {
+
+    
+    // Switch to the main scene once assets are loaded
+    this.scene.start('Malabis');
+  }
+}
 
 
 
@@ -306,26 +360,7 @@ class Malabis extends Phaser.Scene {
   }
 
   ChangeHair(hair) {
-    // if (hair) {
-      this.cha3r.setTexture(hair);
-      // this.cha3r.setPosition(1110 / 2, 397 / 2);
-    // } 
-    // if (hair =='HAIR2') {
-    //   this.cha3r.setTexture(hair);
-    //   this.cha3r.setPosition(1136 / 2, 385 / 2);
-    // }if (hair =='HAIR3') {
-    //   this.cha3r.setTexture(hair);
-    //   this.cha3r.setPosition(1116 / 2, 364 / 2);
-    // }if (hair =='HAIR4') {
-    //   this.cha3r.setTexture(hair);
-    //   this.cha3r.setPosition(1128.5 / 2, 364 / 2);
-    // } if (hair =='HAIR5') {
-    //   this.cha3r.setTexture(hair);
-    //   this.cha3r.setPosition(1100.5 / 2, 385.5 / 2);
-    // }if (hair =='HAIR6') {
-    //   this.cha3r.setTexture(hair);
-    //   this.cha3r.setPosition(1107 / 2, 339.8 / 2);
-    // }
+    this.cha3r.setTexture(hair);
     this.cute.play();
   }
   
@@ -560,6 +595,7 @@ class Malabis extends Phaser.Scene {
 
 game.scene.add('Malabis', Malabis);
 game.scene.add('startGame', startGame);
+game.scene.add('LoadingScene',LoadingScene)
 game.scene.start('startGame');
 
 
