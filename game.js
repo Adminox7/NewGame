@@ -396,7 +396,7 @@ class Malabis extends Phaser.Scene {
     this.image1 = this.add.image(1200 / 2, 673 / 2, characterStat.clothes).setScale(0.325);
     this.cha3r = this.add.image(1190 / 2, 490 / 2, characterStat.hair).setScale(0.35);
     
-    this.imageStage = this.add.image(1202 / 2, 934 / 2, characterStat.shoes).setScale(0.37);
+    this.imageStage = this.add.image(1199 / 2, 350 / 2,characterStat.miniDara).setScale(0.315);
   }
   this.stagenum += 1;
     for (let index = 1; index <= 8; index++) {
@@ -541,7 +541,7 @@ class Malabis extends Phaser.Scene {
 game.scene.add('Malabis', Malabis);
 game.scene.add('startGame', startGame);
 game.scene.add('LoadingScene',LoadingScene)
-game.scene.start('LoadingScene');
+game.scene.start('startGame');
 
 
 
