@@ -140,7 +140,7 @@ class LoadingScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('miniLatifa', './assets/loading/miniLatifa.png');
+ 
     // Afficher l'image de chargement
     // this.add.image(400, 200, 'loading');
     this.add.image(450, 250, 'miniLatifa');
@@ -176,7 +176,7 @@ class LoadingScene extends Phaser.Scene {
       progressBox.destroy();
       loadingText.destroy();
     });
-
+//////////////////////////
     // Charger les assets nécessaires pour le jeu
     this.load.image('room1', './assets/room.png');
     this.load.image('flish-left', './assets/flish-left.png');
@@ -190,7 +190,8 @@ class LoadingScene extends Phaser.Scene {
     this.load.audio('clickeff', './assets/clickeff.wav');
     this.load.audio('cute', './assets/cute.wav');
     this.load.image('valide', './assets/valide.png');
-
+    this.load.image('bgStage', './assets/bgMalabis.png');
+/////////////////////////////////
     // HAIR
     for (let i = 1; i <= 6; i++) {
       this.load.image(`HAIR${i}`, `./assets/1x/dra${i}.png`);
@@ -211,8 +212,8 @@ class LoadingScene extends Phaser.Scene {
       this.load.image(`miniDra${i}`, `./assets/1x/miniDra${i}.png`);
     }
 
-    this.load.image('bgStage', './assets/stage/bgStage.jpg');
-    for (let i = 1; i <= 10; i++) {
+    
+    for (let i = 1; i <= 8; i++) {
       this.load.image(`stage${i}`, `./assets/stage/stage${i}.png`);
     }
   }
@@ -237,7 +238,7 @@ class Malabis extends Phaser.Scene {
     }
 
          
-    this.swith = ['clothes', 'sbabt' ,'miniDra','HAIR'];
+    this.swith = ['miniDra','clothes','HAIR', 'sbabt' ];
     this.fin = 0;
     // Références aux images actuelles
     this.currentImages = [];
@@ -248,42 +249,7 @@ class Malabis extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('room1', './assets/room.png');
-    // this.load.image('vitrine', './assets/vitrine.png');
-    this.load.image('flish-left', './assets/flish-left.png');
-    this.load.image('flish-right', './assets/flish-right.png');
-    this.load.image('caracter', './assets/1x/latifa.png');
-    this.load.image('parametre', './assets/parametre.png');
-    this.load.image('meut', './assets/meut.png');
-    this.load.image('nomeut', './assets/nomeut.png');
-    this.load.image('music', './assets/music.png');
-    this.load.image('nomusic', './assets/nomusic.png');
-    this.load.audio('clickeff', './assets/clickeff.wav');
-    this.load.audio('cute', './assets/cute.wav');
-    this.load.image('valide','./assets/valide.png')
-
-    // HAIR
-    for (let i = 1; i <= 6; i++) {
-      this.load.image(`HAIR${i}`, `./assets/1x/dra${i}.png`);
-    }
-    // Clothes
-    for (let i = 1; i <= 6; i++) {
-      this.load.image(`clothes${i}`, `./assets/1x/labsa${i}.png`);
-    }
-    // Shoes 
-    for (let i = 1; i <= 6; i++) {
-      this.load.image(`shoes${i}`, `./assets/1x/sabat${i}.png`);
-    }
-
-     // miniDara
-     for (let i = 1; i <= 6; i++) {
-      this.load.image(`miniDra${i}`, `./assets/1x/miniDra${i}.png`);
-    }
-
-    this.load.image('bgStage', './assets/stage/bgStage.jpg');
-    for (let i = 1; i <= 10; i++) {
-      this.load.image(`stage${i}`, `./assets/stage/stage${i}.png`);
-    }
+  
   }
 
   create() {
@@ -373,24 +339,6 @@ class Malabis extends Phaser.Scene {
   ChangeClothes(clothes) {
 
       this.image1.setTexture(clothes);
-  
-    
-    // if (clothes =='clothes2'  ) {
-    //   this.image1.setTexture(clothes);
-    //   this.image1.setPosition(1100/2,624/2);
-    // }if (clothes =='clothes3') {
-    //   this.image1.setTexture(clothes);
-    //   this.image1.setPosition(1103/2,615/2);
-    // }if (clothes =='clothes4') {
-    //   this.image1.setTexture(clothes);
-    //   this.image1.setPosition(1104/2,635/2);
-    // }if (clothes =='clothes5') {
-    //   this.image1.setTexture(clothes);
-    //   this.image1.setPosition(1101/2,622/2);
-    // }if (clothes =='clothes6') {
-    //   this.image1.setTexture(clothes);
-    //   this.image1.setPosition(1103/2,635/2);
-    // }    
     this.cute.play();
   }
 
@@ -417,84 +365,59 @@ class Malabis extends Phaser.Scene {
 
   valider() {
     // Afficher l'image de fond du stage
-    this.add.image(200, 200, 'bgStage').setScale(0.2);
+    this.add.image(420, 250, 'bgStage').setScale(0.44);
      // Mise à jour du stage
      
     if ( this.stagenum >=1) {
       
     // Sauvegarder l'état actuel du personnage dans le localStorage
     const characterState = {
+        miniDara: this.miniDara.texture.key,
         clothes: this.image1.texture.key,
         hair: this.cha3r.texture.key,
         shoes: this.sabat.texture.key,
+
     };
     localStorage.setItem('characterState', JSON.stringify(characterState));
 
     // Charger l'état du personnage depuis le localStorage
     const characterStat = JSON.parse(localStorage.getItem('characterState'));
     if (characterStat) {
+        this.miniDara.setTexture(characterStat.miniDara);
         this.image1.setTexture(characterStat.clothes);
         this.cha3r.setTexture(characterStat.hair);
         this.sabat.setTexture(characterStat.shoes);
     }
 
     // Afficher le personnage avec les nouvelles textures
-    this.add.image(1100 / 2, 600 / 2, 'caracter').setScale(0.3);
-    this.image1 = this.add.image(1100 / 2, 624 / 2, characterStat.clothes).setScale(0.7);
-    this.cha3r = this.add.image(1110 / 2, 397 / 2, characterStat.hair).setScale(0.7);
-    if (characterStat.hair =='HAIR1') {
-      this.cha3r.setPosition(1110 / 2, 397 / 2);
-    } if (characterStat.hair =='HAIR2') {
-      this.cha3r.setPosition(1136 / 2, 385 / 2);
-    }if (characterStat.hair =='HAIR3') {
-      this.cha3r.setPosition(1116 / 2, 364 / 2);
-    }if (characterStat.hair =='HAIR4') {
-      this.cha3r.setPosition(1128.5 / 2, 364 / 2);
-    } if (characterStat.hair =='HAIR5') {
-      this.cha3r.setPosition(1100.5 / 2, 385.5 / 2);
-    }if (characterStat.hair =='HAIR6') {
-      this.cha3r.setPosition(1107 / 2, 339.8 / 2);
-    }
-    this.sabat = this.add.image(1132.5 / 2, 880 / 2, characterStat.shoes).setScale(0.7);
+    this.add.image(1200 / 2, 620 / 2, 'caracter').setScale(0.32);
+    this.sabat = this.add.image(1202 / 2, 934 / 2, characterStat.shoes).setScale(0.37);
+    this.miniDara = this.add.image(1199 / 2, 350 / 2,characterStat.miniDara).setScale(0.315);
+    this.image1 = this.add.image(1200 / 2, 673 / 2, characterStat.clothes).setScale(0.325);
+    this.cha3r = this.add.image(1190 / 2, 490 / 2, characterStat.hair).setScale(0.35);
+    
+    this.imageStage = this.add.image(1202 / 2, 934 / 2, characterStat.shoes).setScale(0.37);
   }
   this.stagenum += 1;
-    for (let index = 0; index <= 10; index++) {
+    for (let index = 1; index <= 8; index++) {
         let x = 100 * index;
-        let y = 100;
-
-        if (index >= 9) {
-            x -= 810;
-            y = 400;
-        } else if (index >= 6) {
-            x -= 540;
-            y = 300;
-        } else if (index >= 4) {
-            x -= 270;
-            y = 200;
-        }
-
-        this.stage = this.add.image(x, y, 'stage' + index).setScale(0.2);
-        this.stage.setTint(0x808080);
-
+        
+        this.stage = this.add.image(x+180, 200, 'stage' + index).setScale(0.4);
+        this.imageStage=this.add.image(560 / 2, 405 / 2, 'caracter').setScale(0.08);
         if (this.stage.texture.key === 'stage' + this.stagenum) {
-            this.stage.setInteractive({ useHandCursor: true });
-            this.stage.clearTint();
-            this.stage.on('pointerdown', () => this.validSt());
-        }
+          this.stage.setInteractive({ useHandCursor: true });
+          this.stage.setTexture('stage1');
+          this.stage.on('pointerdown', () => this.validSt());
+      }
+        if (index > 4) {
+          this.stage.setPosition(x - 220, 780 / 2);
+        }  
+        
+       console.log(this.stagenum)
     }
 
 
-    // this.clickeff = this.sound.add('clickeff');
-    // if (this.x === 'music') {
-    //   this.clickeff.setMute(true);
-    //   this.cute.setMute(true);
-    // } else if (this.x === 'nomusic') {
-    //   this.clickeff.setMute(false);
-    //   this.cute.setMute(false);
-    //   this.clickeff.play();
-    // }
-    
-    // this.clickeff.play();
+  
 }
 
   validSt (){
@@ -509,20 +432,7 @@ class Malabis extends Phaser.Scene {
    this.image1 = this.add.image(1200 / 2, 673 / 2, ).setScale(0.325);
    this.miniDara = this.add.image(1199 / 2, 350 / 2,).setScale(0.315);
    this.cha3r = this.add.image(1190 / 2, 490 / 2, ).setScale(0.35);
-  
-
     // Charger l'état du personnage depuis le localStorage
-    
-    // // clothes 
-    // this.image1 = this.add.image(1100 / 2, 624 / 2, 'clothes1').setScale(0.7);
-
-   
-
-    // // HAIR
-    // this.cha3r = this.add.image(1110 / 2, 397 / 2, 'HAIR1').setScale(0.7);
-
-    // // shoes
-    // this.sabat = this.add.image(1132.5 / 2, 880 / 2, 'shoes1').setScale(0.7);
 
     //action flish
     this.flish_right = this.add.image(573 / 2, 810 / 2, 'flish-right').setScale(0.5);
@@ -631,7 +541,7 @@ class Malabis extends Phaser.Scene {
 game.scene.add('Malabis', Malabis);
 game.scene.add('startGame', startGame);
 game.scene.add('LoadingScene',LoadingScene)
-game.scene.start('startGame');
+game.scene.start('LoadingScene');
 
 
 
