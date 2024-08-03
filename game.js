@@ -364,8 +364,12 @@ class Malabis extends Phaser.Scene {
 
 
   valider() {
+    if (this.room1) {
+      this.room1.destroy();
+      this.valide.destroy();
+    }
     // Afficher l'image de fond du stage
-    this.add.image(420, 250, 'bgStage').setScale(0.44);
+   this.bgStage = this.add.image(420, 250, 'bgStage').setScale(0.44);
      // Mise à jour du stage
      
     if ( this.stagenum >=1) {
@@ -416,12 +420,14 @@ class Malabis extends Phaser.Scene {
        console.log(this.stagenum)
     }
 
-
+    
   
 }
 
   validSt (){
-    this.add.image(800 / 2, 500 / 2, 'room1').setScale(0.45);
+    this.bgStage.setVisible(false);
+
+    this.room1 = this.add.image(800 / 2, 500 / 2, 'room1').setScale(0.45);
     // this.vit = this.add.image(600 / 2, 600 / 2, 'vitrine').setScale(0.9);
     // this.vit.skew = 45;
 
@@ -431,7 +437,7 @@ class Malabis extends Phaser.Scene {
    this.sabat = this.add.image(1202 / 2, 934 / 2, ).setScale(0.37);
    this.image1 = this.add.image(1200 / 2, 673 / 2, ).setScale(0.325);
    this.miniDara = this.add.image(1199 / 2, 350 / 2,).setScale(0.315);
-   this.cha3r = this.add.image(1190 / 2, 490 / 2, ).setScale(0.35);
+   this.cha3r = this.add.image(1191 / 2, 493/ 2, ).setScale(0.35);
     // Charger l'état du personnage depuis le localStorage
 
     //action flish
@@ -465,6 +471,7 @@ class Malabis extends Phaser.Scene {
     this.valide.setInteractive({useHandCursor:true})
     this.valide.on('pointerdown', () => this.valider());
 
+    
   }
 
 
