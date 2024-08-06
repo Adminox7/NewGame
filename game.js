@@ -466,7 +466,7 @@ class Malabis extends Phaser.Scene {
     this.clickeff = this.sound.add('clickeff');
     this.cute = this.sound.add('cute')
 
-    this.valide = this.add.image(30,480,'valide').setScale(0.08);
+    this.valide = this.add.image(90,420,'valide').setScale(0.5);
     this.valide.setInteractive({useHandCursor:true})
     this.valide.on('pointerdown', () => this.valider());
 
