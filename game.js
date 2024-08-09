@@ -1,7 +1,7 @@
 const config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 500,
+  width: 1920,
+  height: 1080,
   physics: {
     default: 'arcade',
     arcade: {
@@ -34,7 +34,7 @@ class startGame extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(400, 250, 'room').setScale(0.45);
+    this.add.image(1920 / 2, 1080 / 2, 'room');
 
     this.start = this.add.image(400, 435, 'start').setScale(0.5);
     this.start.setInteractive({ useHandCursor: true });
@@ -377,13 +377,13 @@ class Malabis extends Phaser.Scene {
       this.valide.destroy();
     }
     // Afficher l'image de fond du stage
-   this.bgStage = this.add.image(420, 250, 'bgStage').setScale(0.44);
+   this.bgStage = this.add.image(1920 / 2, 1080 / 2, 'bgStage');
      // Mise à jour du stage
      this.stagenum += 1;
      for (let index = 1; index <= 8; index++) {
-      let x = 100 * index;
+      let x = 237 * index;
       
-      this.stage = this.add.image(x+180, 200, 'stage' + index).setScale(0.4);
+      this.stage = this.add.image(x+360, 449, 'stage' + index);
       // this.imageStage=this.add.image(560 / 2, 405 / 2, 'caracter').setScale(0.08);
 
       if (this.stage.texture.key === 'stage' + this.stagenum) {
@@ -392,7 +392,7 @@ class Malabis extends Phaser.Scene {
         this.stage.on('pointerdown', () => this.validSt());
     }
       if (index > 4) {
-        this.stage.setPosition(x - 220, 780 / 2);
+        this.stage.setPosition(x - 579, 865,50);
       }  
       
 
@@ -445,17 +445,17 @@ class Malabis extends Phaser.Scene {
   validSt (){
     this.bgStage.setVisible(false);
 
-    this.room1 = this.add.image(800 / 2, 500 / 2, 'room1').setScale(0.45);
+    this.room1 = this.add.image(1920 / 2, 1080 / 2, 'room1');
     // this.vit = this.add.image(600 / 2, 600 / 2, 'vitrine').setScale(0.9);
     // this.vit.skew = 45;
 
-    this.add.image(1200 / 2, 620 / 2, 'caracter').setScale(0.32);
+    this.add.image(2823/ 2, 1314 / 2, 'caracter');
 
    // Initialize the images for clothes, hair, and shoes
-   this.sabat = this.add.image(1202 / 2, 934 / 2, ).setScale(0.37);
-   this.image1 = this.add.image(1200 / 2, 673 / 2, ).setScale(0.325);
-   this.miniDara = this.add.image(1199 / 2, 350 / 2,).setScale(0.315);
-   this.cha3r = this.add.image(1191 / 2, 493/ 2, ).setScale(0.35);
+   this.sabat = this.add.image(1202 / 2, 934 / 2, );
+   this.image1 = this.add.image(1200 / 2, 673 / 2, );
+   this.miniDara = this.add.image(1199 / 2, 350 / 2,);
+   this.cha3r = this.add.image(1191 / 2, 493/ 2, );
 
 
     //action flish
@@ -485,7 +485,7 @@ class Malabis extends Phaser.Scene {
     this.clickeff = this.sound.add('clickeff');
     // this.cute = this.sound.add('cute')
 
-    this.valide = this.add.image(90,420,'valide').setScale(0.5);
+    this.valide = this.add.image(110,420,'valide').setScale(0.5);
     this.valide.setInteractive({useHandCursor:true})
     this.valide.on('pointerdown', () => this.valider());
 
