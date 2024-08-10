@@ -436,9 +436,6 @@ class Malabis extends Phaser.Scene {
 }
 
 
-    
-
-   
   
 }
 
