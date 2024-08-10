@@ -36,7 +36,7 @@ class startGame extends Phaser.Scene {
   create() {
     this.add.image(1920 / 2, 1080 / 2, 'room');
 
-    this.start = this.add.image(400, 435, 'start').setScale(0.5);
+    this.start = this.add.image(950, 965, 'start');
     this.start.setInteractive({ useHandCursor: true });
     this.start.on('pointerdown', () => this.startGame());
 
@@ -142,18 +142,18 @@ class LoadingScene extends Phaser.Scene {
  
     // Afficher l'image de chargement
     // this.add.image(400, 200, 'loading');
-    this.add.image(450, 250, 'miniLatifa');
+    this.add.image(930, 540, 'miniLatifa');
 
     // Créer une barre de progression
     let progressBar = this.add.graphics();
     let progressBox = this.add.graphics();
     progressBox.fillStyle(0x222222, 0.8);
-    progressBox.fillRect(240, 270, 320, 50);
+    progressBox.fillRect(900, 540,330, 50);
 
     // Afficher le texte de chargement
     let loadingText = this.make.text({
-      x: 400,
-      y: 300,
+      x: 900,
+      y: 540,
       text: 'Loading...',
       style: {
         font: '20px monospace',
@@ -166,7 +166,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.on('progress', (value) => {
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
-      progressBar.fillRect(250, 280, 300 * value, 30);
+      progressBar.fillRect(900, 540, 300 * value, 30);
     });
 
     // Nettoyer une fois le chargement terminé
@@ -283,12 +283,12 @@ class Malabis extends Phaser.Scene {
 
     if (this.swith[this.fin] === 'clothes') {
       for (let index = 0; index < this.chose.clothes.length; index++) {
-        var x = 340 / 2 + (index * 80);
-        let image = this.add.image(x, 360 / 2, this.chose.clothes[index]).setScale(0.1);
+        var x = 443.50 + (index * 200);
+        let image = this.add.image(x, 380.50, this.chose.clothes[index]).setScale(0.3);
         image.setInteractive({ useHandCursor: true });
         image.on('pointerdown', () => this.ChangeClothes(this.chose.clothes[index]));
         if (index > 2) {
-          image.setPosition(x - 240, 580 / 2);
+          image.setPosition(x - 603.50, 631.50);
         }
         this.currentImages.push(image);
       }
@@ -307,24 +307,24 @@ class Malabis extends Phaser.Scene {
     }
     if (this.swith[this.fin] === 'miniDra') {
       for (let index = 0; index < this.chose.miniDra.length; index++) {
-        var x = 340 / 2 + (index * 80);
-        let image = this.add.image(x, 360 / 2, this.chose.miniDra[index]).setScale(0.25);
+        var x = 234 + (index * 200);
+        let image = this.add.image(x+200, 392, this.chose.miniDra[index]);
         image.setInteractive({ useHandCursor: true });
         image.on('pointerdown', () => this.ChangeminiDra(this.chose.miniDra[index]));
         if (index > 2) {
-          image.setPosition(x - 240, 580 / 2);
+          image.setPosition(x - 400, 650);
         }
         this.currentImages.push(image);
       }
     }
     if (this.swith[this.fin] === 'HAIR') {
       for (let index = 0; index < this.chose.HAIR.length; index++) {
-        var x = 340 / 2 + (index * 80);
-        let image = this.add.image(x, 360 / 2, this.chose.HAIR[index]).setScale(0.15);
+        var x = 443.50 + (index * 200);
+        let image = this.add.image(x, 370.50, this.chose.HAIR[index]).setScale(0.5);
         image.setInteractive({ useHandCursor: true });
         image.on('pointerdown', () => this.ChangeHair(this.chose.HAIR[index]));
         if (index > 2) {
-          image.setPosition(x - 240, 580 / 2);
+          image.setPosition(x - 603.50, 630.50);
         }
         this.currentImages.push(image);
       }
@@ -452,18 +452,18 @@ class Malabis extends Phaser.Scene {
     this.add.image(2823/ 2, 1314 / 2, 'caracter');
 
    // Initialize the images for clothes, hair, and shoes
-   this.sabat = this.add.image(1202 / 2, 934 / 2, );
-   this.image1 = this.add.image(1200 / 2, 673 / 2, );
-   this.miniDara = this.add.image(1199 / 2, 350 / 2,);
-   this.cha3r = this.add.image(1191 / 2, 493/ 2, );
+   this.sabat = this.add.image(1414.50, 1021.50, );
+   this.image1 = this.add.image(1411.50, 717.50, );
+   this.miniDara = this.add.image(1411.50 , 345,);
+   this.cha3r = this.add.image(1403.50 , 482.50, );
 
 
     //action flish
-    this.flish_right = this.add.image(573 / 2, 810 / 2, 'flish-right').setScale(0.5);
+    this.flish_right = this.add.image(680, 880, 'flish-right');
     this.flish_right.setInteractive({ useHandCursor: true });
     this.flish_right.on('pointerdown', () => this.clickRight());
 
-    this.flish_left = this.add.image(453 / 2, 810 / 2, 'flish-left').setScale(0.5);
+    this.flish_left = this.add.image(560, 880, 'flish-left');
     this.flish_left.setInteractive({ useHandCursor: true });
     this.flish_left.on('pointerdown', () => this.clickLeft());
 
@@ -485,7 +485,7 @@ class Malabis extends Phaser.Scene {
     this.clickeff = this.sound.add('clickeff');
     // this.cute = this.sound.add('cute')
 
-    this.valide = this.add.image(110,420,'valide').setScale(0.5);
+    this.valide = this.add.image(270,930,'valide');
     this.valide.setInteractive({useHandCursor:true})
     this.valide.on('pointerdown', () => this.valider());
 
