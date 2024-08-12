@@ -40,15 +40,15 @@ class startGame extends Phaser.Scene {
     this.start.setInteractive({ useHandCursor: true });
     this.start.on('pointerdown', () => this.startGame());
 
-    this.meut = this.add.image(750, 50, 'nomeut').setScale(0);
+    this.meut = this.add.image(1800, 50, 'nomeut').setScale(0);
     this.meut.setInteractive({ useHandCursor: true });
     this.meut.on('pointerdown', () => this.clickMeut());
 
-    this.music = this.add.image(750, 50, 'music').setScale(0);
+    this.music = this.add.image(1800, 50, 'music').setScale(0);
     this.music.setInteractive({ useHandCursor: true });
     this.music.on('pointerdown', () => this.clickMusic());
 
-    this.parametre = this.add.image(750, 50, 'parametre').setScale(1);
+    this.parametre = this.add.image(1800, 50, 'parametre').setScale(1);
     this.parametre.setInteractive({ useHandCursor: true });
     this.parametre.on('pointerdown', () => this.parametreGame());
 
@@ -262,15 +262,15 @@ class Malabis extends Phaser.Scene {
   create() {
     // console.log(this.store['miniDra'][1])
     this.valider()
-    this.meut = this.add.image(750, 50, 'nomeut').setScale(0);
+    this.meut = this.add.image(1800, 50, 'nomeut').setScale(0);
     this.meut.setInteractive({ useHandCursor: true });
     this.meut.on('pointerdown', () => this.clickMeut());
 
-    this.music = this.add.image(750, 50, 'music').setScale(0);
+    this.music = this.add.image(1800, 50, 'music').setScale(0);
     this.music.setInteractive({ useHandCursor: true });
     this.music.on('pointerdown', () => this.clickMusic());
 
-    this.parametre = this.add.image(750, 50, 'parametre').setScale(1);
+    this.parametre = this.add.image(1800, 50, 'parametre').setScale(1);
     this.parametre.setInteractive({ useHandCursor: true });
     this.parametre.on('pointerdown', () => this.parametreGame());
     
@@ -406,29 +406,29 @@ class Malabis extends Phaser.Scene {
    this.store.sbabt.push(this.sabat.texture.key);
 
   for (let index = 0; index < this.store.miniDra.length; index++) {
-    let x = 560 / 2 + (index * 100);
-    let image = this.add.image(x, 145, this.store.miniDra[index]).setScale(0.065);
+    let x = 603 + (index * 250);
+    let image = this.add.image(x, 371.50, this.store.miniDra[index]).setScale(0.3);
     if (index > 2) {
       image.setPosition(x - 240, 300);
     }
   } 
   for (let index = 0; index < this.store.clothes.length; index++) {
-    let x = 560 / 2 + (index * 100);
-    let image = this.add.image(x, 207, this.store.clothes[index]).setScale(0.075);
+    let x = 603 + (index * 250);
+    let image = this.add.image(x, 465, this.store.clothes[index]).setScale(0.3);
     if (index > 2) {
       image.setPosition(x - 240, 300);
     }
   } 
   for (let index = 0; index < this.store.HAIR.length; index++) {
-    let x = 560 / 2 + (index * 100);
-    let image = this.add.image(x,  179 , this.store.HAIR[index]).setScale(0.1);
+    let x = 599.50 + (index * 250);
+    let image = this.add.image(x, 412.50 , this.store.HAIR[index]).setScale(0.35);
     if (index > 2) {
       image.setPosition(x - 240, 300);
     }
   } 
   for (let index = 0; index < this.store.sbabt.length; index++) {
-    let x = 560 / 2 + (index * 100);
-    let image = this.add.image(x, 230, this.store.sbabt[index]).setScale(0.12);
+    let x = 603.50  + (index * 250);
+    let image = this.add.image(x, 548.50, this.store.sbabt[index]).setScale(0.4);
     if (index > 3) {
       image.setPosition(x - 240, 300);
     }
