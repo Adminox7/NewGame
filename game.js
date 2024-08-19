@@ -29,7 +29,7 @@ class startGame extends Phaser.Scene {
     this.load.image('nomeut', './assets/nomeut.png');
     this.load.image('music', './assets/music.png');
     this.load.image('nomusic', './assets/nomusic.png');
-    this.load.audio('clickeff', './assets/clickeff.wav');
+    //this.load.audio('clickeff', './assets/clickeff.wav');
     this.load.image('miniLatifa', './assets/loading/miniLatifa.png');
   }
 
@@ -40,30 +40,30 @@ class startGame extends Phaser.Scene {
     this.start.setInteractive({ useHandCursor: true });
     this.start.on('pointerdown', () => this.startGame());
 
-    this.meut = this.add.image(1800, 50, 'nomeut').setScale(0);
+    this.meut = this.add.image(1800, 80, 'nomeut').setScale(0);
     this.meut.setInteractive({ useHandCursor: true });
     this.meut.on('pointerdown', () => this.clickMeut());
 
-    this.music = this.add.image(1800, 50, 'music').setScale(0);
+    this.music = this.add.image(1800, 80, 'music').setScale(0);
     this.music.setInteractive({ useHandCursor: true });
     this.music.on('pointerdown', () => this.clickMusic());
 
-    this.parametre = this.add.image(1800, 50, 'parametre').setScale(1);
+    this.parametre = this.add.image(1800, 80, 'parametre').setScale(1);
     this.parametre.setInteractive({ useHandCursor: true });
     this.parametre.on('pointerdown', () => this.parametreGame());
 
-    this.clickeff = this.sound.add('clickeff');
+    // this.clickeff = this.sound.add('clickeff');
   }
 
   update() {}
 
   startGame() {
     this.scene.start('LoadingScene');
-    this.clickeff.play();
+    // this.clickeff.play();
   }
 
   parametreGame() {
-    this.clickeff.play();
+    // this.clickeff.play();
 
   
     this.tweens.add({
@@ -73,16 +73,15 @@ class startGame extends Phaser.Scene {
       ease: 'Linear',
       yoyo: true,
     });
-
     if (this.click === 1) {
       this.tweens.add({
         targets: this.meut,
-        y: 50,
+        y: 80,
         duration: 500,
         onComplete: () => {
           this.tweens.add({
             targets: this.music,
-            y: 50,
+            y: 80,
             duration: 500,
           });
         }
@@ -90,7 +89,7 @@ class startGame extends Phaser.Scene {
       
       this.click = 2;
     } else if (this.click === 2) {
-      this.music.setScale(1)
+      this.music.setScale(0.2)
       this.meut.setScale(0.035)
       this.tweens.add({
         targets: this.meut,
@@ -123,12 +122,12 @@ class startGame extends Phaser.Scene {
     if (this.x === 'music') {
       this.music.setTexture('nomusic');
       this.x = 'nomusic';
-      this.clickeff.setMute(true);
+      // this.clickeff.setMute(true);
     } else if (this.x === 'nomusic') {
       this.music.setTexture('music');
       this.x = 'music';
-      this.clickeff.setMute(false);
-      this.clickeff.play();
+      // this.clickeff.setMute(false);
+      // this.clickeff.play();
     }
   }
 }
@@ -186,7 +185,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('nomeut', './assets/nomeut.png');
     this.load.image('music', './assets/music.png');
     this.load.image('nomusic', './assets/nomusic.png');
-    this.load.audio('clickeff', './assets/clickeff.wav');
+    //this.load.audio('clickeff', './assets/clickeff.wav');
     // this.load.audio('cute', './assets/cute.wav');
     this.load.image('valide', './assets/valide.png');
     this.load.image('bgStage', './assets/bgMalabis.png');
@@ -262,15 +261,15 @@ class Malabis extends Phaser.Scene {
   create() {
     // console.log(this.store['miniDra'][1])
     this.valider()
-    this.meut = this.add.image(1800, 50, 'nomeut').setScale(0);
+    this.meut = this.add.image(1800, 80, 'nomeut').setScale(0);
     this.meut.setInteractive({ useHandCursor: true });
     this.meut.on('pointerdown', () => this.clickMeut());
 
-    this.music = this.add.image(1800, 50, 'music').setScale(0);
+    this.music = this.add.image(1800, 80, 'music').setScale(0);
     this.music.setInteractive({ useHandCursor: true });
     this.music.on('pointerdown', () => this.clickMusic());
 
-    this.parametre = this.add.image(1800, 50, 'parametre').setScale(1);
+    this.parametre = this.add.image(1800, 80, 'parametre').setScale(1);
     this.parametre.setInteractive({ useHandCursor: true });
     this.parametre.on('pointerdown', () => this.parametreGame());
     
@@ -295,12 +294,12 @@ class Malabis extends Phaser.Scene {
     }
     if (this.swith[this.fin] === 'sbabt') {
       for (let index = 0; index < this.chose.sbabt.length; index++) {
-        var x = 340 / 2 + (index * 80);
-        let image = this.add.image(x, 360 / 2, this.chose.sbabt[index]).setScale(0.4);
+        var x = 443.50  + (index *200);
+        let image = this.add.image(x, 380.50, this.chose.sbabt[index]);
         image.setInteractive({ useHandCursor: true });
         image.on('pointerdown', () => this.ChangeShoes(this.chose.sbabt[index]));
         if (index > 2) {
-          image.setPosition(x - 240, 600 / 2);
+          image.setPosition(x - 603.50, 631.50);
         }
         this.currentImages.push(image);
       }
@@ -334,13 +333,13 @@ class Malabis extends Phaser.Scene {
   clickRight() {
     this.fin = (this.fin + 1) % this.swith.length;
     this.updateImages();
-    this.clickeff.play();
+    // this.clickeff.play();
   }
 
   clickLeft() {
     this.fin = (this.fin - 1 + this.swith.length) % this.swith.length;
     this.updateImages();
-    this.clickeff.play();
+    // this.clickeff.play();
   }
 
   ChangeClothes(clothes) {
@@ -372,6 +371,7 @@ class Malabis extends Phaser.Scene {
 
 
   valider() {
+
     if (this.room1) {
       this.room1.destroy();
       this.valide.destroy();
@@ -408,29 +408,29 @@ class Malabis extends Phaser.Scene {
   for (let index = 0; index < this.store.miniDra.length; index++) {
     let x = 603 + (index * 250);
     let image = this.add.image(x, 371.50, this.store.miniDra[index]).setScale(0.3);
-    if (index > 2) {
-      image.setPosition(x - 240, 300);
+    if (index > 3) {
+      image.setPosition(x - 940, 771.50);
     }
   } 
   for (let index = 0; index < this.store.clothes.length; index++) {
     let x = 603 + (index * 250);
     let image = this.add.image(x, 465, this.store.clothes[index]).setScale(0.3);
-    if (index > 2) {
-      image.setPosition(x - 240, 300);
+    if (index > 3) {
+      image.setPosition(x - 940, 865);
     }
   } 
   for (let index = 0; index < this.store.HAIR.length; index++) {
     let x = 599.50 + (index * 250);
     let image = this.add.image(x, 412.50 , this.store.HAIR[index]).setScale(0.35);
-    if (index > 2) {
-      image.setPosition(x - 240, 300);
+    if (index > 3) {
+      image.setPosition(x - 940,812.50);
     }
   } 
   for (let index = 0; index < this.store.sbabt.length; index++) {
     let x = 603.50  + (index * 250);
-    let image = this.add.image(x, 548.50, this.store.sbabt[index]).setScale(0.4);
+    let image = this.add.image(x, 556.50, this.store.sbabt[index]).setScale(0.4);
     if (index > 3) {
-      image.setPosition(x - 240, 300);
+      image.setPosition(x - 940, 956.50);
     }
   }
 }
@@ -441,7 +441,7 @@ class Malabis extends Phaser.Scene {
 
   validSt (){
     this.bgStage.setVisible(false);
-
+    this.stage.setInteractive({ useHandCursor: false })
     this.room1 = this.add.image(1920 / 2, 1080 / 2, 'room1');
     // this.vit = this.add.image(600 / 2, 600 / 2, 'vitrine').setScale(0.9);
     // this.vit.skew = 45;
@@ -467,19 +467,19 @@ class Malabis extends Phaser.Scene {
     // Initial load of images
     this.updateImages();
 
-    this.meut = this.add.image(750, 50, 'nomeut').setScale(0);
+    this.meut = this.add.image(1800, 80, 'nomeut').setScale(0);
     this.meut.setInteractive({ useHandCursor: true });
     this.meut.on('pointerdown', () => this.clickMeut());
 
-    this.music = this.add.image(750, 50, 'music').setScale(0);
+    this.music = this.add.image(1800, 80, 'music').setScale(0);
     this.music.setInteractive({ useHandCursor: true });
     this.music.on('pointerdown', () => this.clickMusic());
 
-    this.parametre = this.add.image(750, 50, 'parametre').setScale(1);
+    this.parametre = this.add.image(1800, 80, 'parametre').setScale(1);
     this.parametre.setInteractive({ useHandCursor: true });
     this.parametre.on('pointerdown', () => this.parametreGame());
 
-    this.clickeff = this.sound.add('clickeff');
+    // this.clickeff = this.sound.add('clickeff');
     // this.cute = this.sound.add('cute')
 
     this.valide = this.add.image(270,930,'valide');
@@ -492,7 +492,9 @@ class Malabis extends Phaser.Scene {
 
 
   parametreGame() {
-    this.clickeff.play();
+    // this.clickeff.play();
+
+  
     this.tweens.add({
       targets: this.parametre,
       angle: 180,
@@ -504,12 +506,12 @@ class Malabis extends Phaser.Scene {
     if (this.click === 1) {
       this.tweens.add({
         targets: this.meut,
-        y: 50,
+        y: 80,
         duration: 500,
         onComplete: () => {
           this.tweens.add({
             targets: this.music,
-            y: 50,
+            y: 80,
             duration: 500,
           });
         }
@@ -517,7 +519,7 @@ class Malabis extends Phaser.Scene {
       
       this.click = 2;
     } else if (this.click === 2) {
-      this.music.setScale(1)
+      this.music.setScale(0.035)
       this.meut.setScale(0.035)
       this.tweens.add({
         targets: this.meut,
@@ -538,7 +540,7 @@ class Malabis extends Phaser.Scene {
 
   clickMeut() {
     if (this.m === 'nomeut') {
-      this.meut.setTexture('meut').setScale(1);
+      this.meut.setTexture('meut').setScale(0.035);
       this.m = 'meut';
     } else if (this.m === 'meut') {
       this.meut.setTexture('nomeut').setScale(0.035);
@@ -549,12 +551,12 @@ class Malabis extends Phaser.Scene {
     if (this.x === 'music') {
       this.music.setTexture('nomusic');
       this.x = 'nomusic';
-      this.clickeff.setMute(true);
+      // this.clickeff.setMute(true);
       // this.cute.setMute(true);
     } else if (this.x === 'nomusic') {
       this.music.setTexture('music');
       this.x = 'music';
-      this.clickeff.setMute(false);
+      // this.clickeff.setMute(false);
       // this.cute.setMute(false);
       
     }
