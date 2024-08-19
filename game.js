@@ -89,16 +89,16 @@ class startGame extends Phaser.Scene {
       
       this.click = 2;
     } else if (this.click === 2) {
-      this.music.setScale(0.2)
-      this.meut.setScale(0.035)
+      this.music.setScale(0.25)
+      this.meut.setScale(0.25)
       this.tweens.add({
         targets: this.meut,
-        y: 105,
+        y: 160,
         duration: 500,
         onComplete: () => {
           this.tweens.add({
             targets: this.music,
-            y: 150,
+            y: 230,
             duration: 500,
           });
         }
@@ -110,10 +110,10 @@ class startGame extends Phaser.Scene {
 
   clickMeut() {
     if (this.m === 'nomeut') {
-      this.meut.setTexture('meut').setScale(1);
+      this.meut.setTexture('meut').setScale(0.25);
       this.m = 'meut';
     } else if (this.m === 'meut') {
-      this.meut.setTexture('nomeut').setScale(0.035);
+      this.meut.setTexture('nomeut').setScale(0.25);
       this.m = 'nomeut';
     }
   }
@@ -138,21 +138,23 @@ class LoadingScene extends Phaser.Scene {
   }
 
   preload() {
- 
-    // Afficher l'image de chargement
-    // this.add.image(400, 200, 'loading');
-    this.add.image(930, 540, 'miniLatifa');
+    // Display the loading image
+    this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2 - 100, 'miniLatifa').setScale(0.5);
 
-    // Créer une barre de progression
-    let progressBar = this.add.graphics();
+    // Create a progress box with a border
     let progressBox = this.add.graphics();
     progressBox.fillStyle(0x222222, 0.8);
-    progressBox.fillRect(900, 540,330, 50);
+    progressBox.fillRect(this.cameras.main.width / 2 - 165, this.cameras.main.height / 2, 330, 50);
+    progressBox.lineStyle(4, 0xffffff, 1);
+    progressBox.strokeRect(this.cameras.main.width / 2 - 165, this.cameras.main.height / 2, 330, 50);
 
-    // Afficher le texte de chargement
+    // Create a progress bar
+    let progressBar = this.add.graphics();
+
+    // Add loading text with animation
     let loadingText = this.make.text({
-      x: 900,
-      y: 540,
+      x: this.cameras.main.width / 2,
+      y: this.cameras.main.height / 2 - 30,
       text: 'Loading...',
       style: {
         font: '20px monospace',
@@ -160,22 +162,29 @@ class LoadingScene extends Phaser.Scene {
       }
     });
     loadingText.setOrigin(0.5, 0.5);
+    this.tweens.add({
+      targets: loadingText,
+      alpha: { from: 0, to: 1 },
+      duration: 500,
+      repeat: -1,
+      yoyo: true
+    });
 
-    // Mettre à jour la barre de progression
+    // Update the progress bar
     this.load.on('progress', (value) => {
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
-      progressBar.fillRect(900, 540, 300 * value, 30);
+      progressBar.fillRect(this.cameras.main.width / 2 - 150, this.cameras.main.height / 2 + 10, 300 * value, 30);
     });
 
-    // Nettoyer une fois le chargement terminé
+    // Clean up once the loading is complete
     this.load.on('complete', () => {
       progressBar.destroy();
       progressBox.destroy();
       loadingText.destroy();
     });
-//////////////////////////
-    // Charger les assets nécessaires pour le jeu
+
+    // Load necessary assets for the game
     this.load.image('room1', './assets/room.png');
     this.load.image('flish-left', './assets/flish-left.png');
     this.load.image('flish-right', './assets/flish-right.png');
@@ -185,42 +194,41 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('nomeut', './assets/nomeut.png');
     this.load.image('music', './assets/music.png');
     this.load.image('nomusic', './assets/nomusic.png');
-    //this.load.audio('clickeff', './assets/clickeff.wav');
-    // this.load.audio('cute', './assets/cute.wav');
     this.load.image('valide', './assets/valide.png');
     this.load.image('bgStage', './assets/bgMalabis.png');
-/////////////////////////////////
-    // HAIR
+
+    // Load hair assets
     for (let i = 1; i <= 6; i++) {
       this.load.image(`HAIR${i}`, `./assets/1x/dra${i}.png`);
     }
 
-    // Clothes
+    // Load clothes assets
     for (let i = 1; i <= 6; i++) {
       this.load.image(`clothes${i}`, `./assets/1x/labsa${i}.png`);
     }
 
-    // Shoes
+    // Load shoes assets
     for (let i = 1; i <= 6; i++) {
       this.load.image(`shoes${i}`, `./assets/1x/sabat${i}.png`);
     }
 
-    // miniDara
+    // Load miniDara assets
     for (let i = 1; i <= 6; i++) {
       this.load.image(`miniDra${i}`, `./assets/1x/miniDra${i}.png`);
     }
 
-    
+    // Load stage assets
     for (let i = 1; i <= 8; i++) {
       this.load.image(`stage${i}`, `./assets/stage/stage${i}.png`);
     }
   }
 
   create() {
-    // Passer à la scène principale une fois les assets chargés
+    // Transition to the main scene once assets are loaded
     this.scene.start('Malabis');
   }
 }
+
 
 
  
@@ -565,7 +573,7 @@ class Malabis extends Phaser.Scene {
 
 game.scene.add('Malabis', Malabis);
 game.scene.add('startGame', startGame);
-game.scene.add('LoadingScene',LoadingScene)
+game.scene.add('LoadingScene',LoadingScene);
 game.scene.start('startGame');
 
 
