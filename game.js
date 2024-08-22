@@ -53,16 +53,25 @@ class startGame extends Phaser.Scene {
     this.parametre.on('pointerdown', () => this.parametreGame());
 
     // Ajout du bouton plein écran
-    this.fullscreenButton = this.add.image(80, 80, 'fullscreen').setScale(0.1)
-    this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",function() {
-      if(this.scene.scale.isFullscreen==false) {
-          this.scene.scale.startFullscreen();
-      }
-      else {
-          this.scene.scale.stopFullscreen();
-      }
-      
-     })
+    this.fullscreenButton = this.add.image(80, 80, 'fullscreen').setScale(0.1);
+    this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown", () => {
+        if (this.scale.isFullscreen === false) {
+            this.scale.startFullscreen();
+            this.scale.canvas.style.width = '100%';
+            this.scale.canvas.style.height = '100vh';
+            this.scale.canvas.style.borderRadius = '20px'; // Correction de 'border.raduis' à 'borderRadius'
+            this.scale.canvas.style.marginTop = '0vh'; // Correction de 'margin.top' à 'marginTop'
+            this.scale.canvas.style.marginLeft = '0%'; // Correction de 'margin.left' à 'marginLeft'
+        } else {
+            this.scale.stopFullscreen();
+            this.scale.canvas.style.width = ''; // Réinitialiser à la valeur par défaut
+            this.scale.canvas.style.height = ''; // Réinitialiser à la valeur par défaut
+            this.scale.canvas.style.borderRadius = ''; // Réinitialiser à la valeur par défaut
+            this.scale.canvas.style.marginTop = ''; // Réinitialiser à la valeur par défaut
+            this.scale.canvas.style.marginLeft = ''; // Réinitialiser à la valeur par défaut
+        }
+    });
+    
   }
 
   update() {}
@@ -429,9 +438,9 @@ class Malabis extends Phaser.Scene {
   } 
   for (let index = 0; index < this.store.sbabt.length; index++) {
     let x = 603.50  + (index * 250);
-    let image = this.add.image(x, 556.50, this.store.sbabt[index]).setScale(0.4);
+    let image = this.add.image(x, 510.50, this.store.sbabt[index]).setScale(0.4);
     if (index > 3) {
-      image.setPosition(x - 940, 956.50);
+      image.setPosition(x - 940, 910.50);
     }
   }
 }
@@ -473,7 +482,7 @@ this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",f
    this.sabat = this.add.image(1414.50, 1021.50, );
    this.image1 = this.add.image(1411.50, 717.50, );
    this.miniDara = this.add.image(1411.50 , 345,);
-   this.cha3r = this.add.image(1403.50 , 482.50, );
+   this.cha3r = this.add.image(1402 , 491.50, );
 
 
     //action flish
