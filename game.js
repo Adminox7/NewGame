@@ -59,7 +59,7 @@ class startGame extends Phaser.Scene {
             this.scale.startFullscreen();
             this.scale.canvas.style.width = '100%';
             this.scale.canvas.style.height = '100vh';
-            this.scale.canvas.style.borderRadius = '20px'; // Correction de 'border.raduis' à 'borderRadius'
+            this.scale.canvas.style.borderRadius = '0px'; // Correction de 'border.raduis' à 'borderRadius'
             this.scale.canvas.style.marginTop = '0vh'; // Correction de 'margin.top' à 'marginTop'
             this.scale.canvas.style.marginLeft = '0%'; // Correction de 'margin.left' à 'marginLeft'
         } else {
