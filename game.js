@@ -524,9 +524,6 @@ this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",f
 
 
   parametreGame() {
-    // this.clickeff.play();
-
-  
     this.tweens.add({
       targets: this.parametre,
       angle: 180,
@@ -548,49 +545,43 @@ this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",f
           });
         }
       });
-      
       this.click = 2;
     } else if (this.click === 2) {
-      this.music.setScale(0.035)
-      this.meut.setScale(0.035)
+      this.music.setScale(0.25);
+      this.meut.setScale(0.25);
       this.tweens.add({
         targets: this.meut,
-        y: 105,
+        y: 160,
         duration: 500,
         onComplete: () => {
           this.tweens.add({
             targets: this.music,
-            y: 150,
+            y: 230,
             duration: 500,
           });
         }
       });
-
       this.click = 1;
     }
   }
 
   clickMeut() {
     if (this.m === 'nomeut') {
-      this.meut.setTexture('meut').setScale(0.035);
+      this.meut.setTexture('meut').setScale(0.25);
       this.m = 'meut';
     } else if (this.m === 'meut') {
-      this.meut.setTexture('nomeut').setScale(0.035);
+      this.meut.setTexture('nomeut').setScale(0.25);
       this.m = 'nomeut';
     }
   }
+
   clickMusic() {
     if (this.x === 'music') {
       this.music.setTexture('nomusic');
       this.x = 'nomusic';
-      // this.clickeff.setMute(true);
-      // this.cute.setMute(true);
     } else if (this.x === 'nomusic') {
       this.music.setTexture('music');
       this.x = 'music';
-      // this.clickeff.setMute(false);
-      // this.cute.setMute(false);
-      
     }
   }
 }
