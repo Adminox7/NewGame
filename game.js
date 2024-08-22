@@ -53,8 +53,8 @@ class startGame extends Phaser.Scene {
     this.parametre.on('pointerdown', () => this.parametreGame());
 
     // Ajout du bouton plein écran
-    let fullscreenButton = this.add.image(80, 80, 'fullscreen').setScale(0.1)
-    fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",function() {
+    this.fullscreenButton = this.add.image(80, 80, 'fullscreen').setScale(0.1)
+    this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",function() {
       if(this.scene.scale.isFullscreen==false) {
           this.scene.scale.startFullscreen();
       }
@@ -273,18 +273,7 @@ class Malabis extends Phaser.Scene {
   create() {
     // console.log(this.store['miniDra'][1])
     this.valider()
-    this.meut = this.add.image(1800, 80, 'nomeut').setScale(0);
-    this.meut.setInteractive({ useHandCursor: true });
-    this.meut.on('pointerdown', () => this.clickMeut());
-
-    this.music = this.add.image(1800, 80, 'music').setScale(0);
-    this.music.setInteractive({ useHandCursor: true });
-    this.music.on('pointerdown', () => this.clickMusic());
-
-    this.parametre = this.add.image(1800, 80, 'parametre').setScale(1);
-    this.parametre.setInteractive({ useHandCursor: true });
-    this.parametre.on('pointerdown', () => this.parametreGame());
-    
+   
   }
 
   updateImages() {
@@ -448,7 +437,27 @@ class Malabis extends Phaser.Scene {
 }
 
 
+this.meut = this.add.image(1800, 80, 'nomeut').setScale(0);
+this.meut.setInteractive({ useHandCursor: true });
+this.meut.on('pointerdown', () => this.clickMeut());
+
+this.music = this.add.image(1800, 80, 'music').setScale(0);
+this.music.setInteractive({ useHandCursor: true });
+this.music.on('pointerdown', () => this.clickMusic());
+
+this.parametre = this.add.image(1800, 80, 'parametre').setScale(1);
+this.parametre.setInteractive({ useHandCursor: true });
+this.parametre.on('pointerdown', () => this.parametreGame());
+this.fullscreenButton = this.add.image(80, 80, 'fullscreen').setScale(0.1)
+this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",function() {
+  if(this.scene.scale.isFullscreen==false) {
+      this.scene.scale.startFullscreen();
+  }
+  else {
+      this.scene.scale.stopFullscreen();
+  }
   
+ })
 }
 
   validSt (){
@@ -490,6 +499,17 @@ class Malabis extends Phaser.Scene {
     this.parametre = this.add.image(1800, 80, 'parametre').setScale(1);
     this.parametre.setInteractive({ useHandCursor: true });
     this.parametre.on('pointerdown', () => this.parametreGame());
+
+    this.fullscreenButton = this.add.image(80, 80, 'fullscreen').setScale(0.1)
+    this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",function() {
+      if(this.scene.scale.isFullscreen==false) {
+          this.scene.scale.startFullscreen();
+      }
+      else {
+          this.scene.scale.stopFullscreen();
+      }
+      
+     })
 
     // this.clickeff = this.sound.add('clickeff');
     // this.cute = this.sound.add('cute')
