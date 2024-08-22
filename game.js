@@ -29,8 +29,8 @@ class startGame extends Phaser.Scene {
     this.load.image('nomeut', './assets/nomeut.png');
     this.load.image('music', './assets/music.png');
     this.load.image('nomusic', './assets/nomusic.png');
-    //this.load.audio('clickeff', './assets/clickeff.wav');
     this.load.image('miniLatifa', './assets/loading/miniLatifa.png');
+    this.load.image('fullscreen', './assets/fullScreen.png');
   }
 
   create() {
@@ -52,20 +52,26 @@ class startGame extends Phaser.Scene {
     this.parametre.setInteractive({ useHandCursor: true });
     this.parametre.on('pointerdown', () => this.parametreGame());
 
-    // this.clickeff = this.sound.add('clickeff');
+    // Ajout du bouton plein écran
+    let fullscreenButton = this.add.image(80, 80, 'fullscreen').setScale(0.1)
+    fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",function() {
+      if(this.scene.scale.isFullscreen==false) {
+          this.scene.scale.startFullscreen();
+      }
+      else {
+          this.scene.scale.stopFullscreen();
+      }
+      
+     })
   }
 
   update() {}
 
   startGame() {
     this.scene.start('LoadingScene');
-    // this.clickeff.play();
   }
 
   parametreGame() {
-    // this.clickeff.play();
-
-  
     this.tweens.add({
       targets: this.parametre,
       angle: 180,
@@ -73,6 +79,7 @@ class startGame extends Phaser.Scene {
       ease: 'Linear',
       yoyo: true,
     });
+
     if (this.click === 1) {
       this.tweens.add({
         targets: this.meut,
@@ -86,11 +93,10 @@ class startGame extends Phaser.Scene {
           });
         }
       });
-      
       this.click = 2;
     } else if (this.click === 2) {
-      this.music.setScale(0.25)
-      this.meut.setScale(0.25)
+      this.music.setScale(0.25);
+      this.meut.setScale(0.25);
       this.tweens.add({
         targets: this.meut,
         y: 160,
@@ -103,7 +109,6 @@ class startGame extends Phaser.Scene {
           });
         }
       });
-
       this.click = 1;
     }
   }
@@ -122,15 +127,14 @@ class startGame extends Phaser.Scene {
     if (this.x === 'music') {
       this.music.setTexture('nomusic');
       this.x = 'nomusic';
-      // this.clickeff.setMute(true);
     } else if (this.x === 'nomusic') {
       this.music.setTexture('music');
       this.x = 'music';
-      // this.clickeff.setMute(false);
-      // this.clickeff.play();
     }
   }
 }
+
+
 
 class LoadingScene extends Phaser.Scene {
   constructor() {
