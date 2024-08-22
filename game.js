@@ -462,7 +462,7 @@ this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",f
 
   validSt (){
     this.bgStage.setVisible(false);
-    this.stage.setInteractive({ useHandCursor: false })
+    this.stage.setInteractive({ useHandCursor: false });
     this.room1 = this.add.image(1920 / 2, 1080 / 2, 'room1');
     // this.vit = this.add.image(600 / 2, 600 / 2, 'vitrine').setScale(0.9);
     // this.vit.skew = 45;
@@ -500,16 +500,16 @@ this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",f
     this.parametre.setInteractive({ useHandCursor: true });
     this.parametre.on('pointerdown', () => this.parametreGame());
 
-    this.fullscreenButton = this.add.image(80, 80, 'fullscreen').setScale(0.1)
-    this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",function() {
-      if(this.scene.scale.isFullscreen==false) {
-          this.scene.scale.startFullscreen();
-      }
-      else {
-          this.scene.scale.stopFullscreen();
-      }
-      
-     })
+this.fullscreenButton = this.add.image(80, 80, 'fullscreen').setScale(0.1)
+this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",function() {
+  if(this.scene.scale.isFullscreen==false) {
+      this.scene.scale.startFullscreen();
+  }
+  else {
+      this.scene.scale.stopFullscreen();
+  }
+  
+ })
 
     // this.clickeff = this.sound.add('clickeff');
     // this.cute = this.sound.add('cute')
