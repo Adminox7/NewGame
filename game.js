@@ -52,6 +52,8 @@ class startGame extends Phaser.Scene {
     this.parametre.setInteractive({ useHandCursor: true });
     this.parametre.on('pointerdown', () => this.parametreGame());
 
+
+
     // Ajout du bouton plein écran
     this.fullscreenButton = this.add.image(80, 80, 'fullscreen').setScale(0.1);
     this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown", () => {
@@ -249,6 +251,7 @@ class LoadingScene extends Phaser.Scene {
 class Malabis extends Phaser.Scene {
   constructor() {
     super({ key: 'Malabis' });
+
     this.chose = {
       clothes: ['clothes1', 'clothes2', 'clothes3', 'clothes4', 'clothes5', 'clothes6'],
       sbabt: ['shoes1', 'shoes2', 'shoes3','shoes4', 'shoes5', 'shoes6'],
@@ -272,7 +275,7 @@ class Malabis extends Phaser.Scene {
       sbabt:[]
     }
 
-
+    this.selectedStage = '';
   }
 
   preload() {
@@ -284,6 +287,8 @@ class Malabis extends Phaser.Scene {
     this.valider()
    
   }
+
+
 
   updateImages() {
     // Détruire les images actuelles
@@ -380,96 +385,119 @@ class Malabis extends Phaser.Scene {
   }
 
 
-  valider() {
+    valider() {
 
-    if (this.room1) {
-      this.room1.destroy();
-      this.valide.destroy();
-    }
-    // Afficher l'image de fond du stage
-   this.bgStage = this.add.image(1920 / 2, 1080 / 2, 'bgStage');
-     // Mise à jour du stage
-     this.stagenum += 1;
-     for (let index = 1; index <= 8; index++) {
-      let x = 237 * index;
-      
-      this.stage = this.add.image(x+360, 449, 'stage' + index);
-      // this.imageStage=this.add.image(560 / 2, 405 / 2, 'caracter').setScale(0.08);
-
-      if (this.stage.texture.key === 'stage' + this.stagenum) {
-        this.stage.setInteractive({ useHandCursor: true });
-        this.stage.setTexture('stage1');
-        this.stage.on('pointerdown', () => this.validSt());
-    }
-      if (index > 4) {
-        this.stage.setPosition(x - 579, 865,50);
-      }  
-      
-
-  }
-     if ( this.stagenum >=2) {
-      
-      // Stocker l'état actuel du personnage dans `this.store`
-   this.store.miniDra.push(this.miniDara.texture.key);
-   this.store.clothes.push(this.image1.texture.key);
-   this.store.HAIR.push(this.cha3r.texture.key);
-   this.store.sbabt.push(this.sabat.texture.key);
-
-  for (let index = 0; index < this.store.miniDra.length; index++) {
-    let x = 603 + (index * 250);
-    let image = this.add.image(x, 371.50, this.store.miniDra[index]).setScale(0.3);
-    if (index > 3) {
-      image.setPosition(x - 940, 771.50);
-    }
-  } 
-  for (let index = 0; index < this.store.clothes.length; index++) {
-    let x = 603 + (index * 250);
-    let image = this.add.image(x, 465, this.store.clothes[index]).setScale(0.3);
-    if (index > 3) {
-      image.setPosition(x - 940, 865);
-    }
-  } 
-  for (let index = 0; index < this.store.HAIR.length; index++) {
-    let x = 599.50 + (index * 250);
-    let image = this.add.image(x, 412.50 , this.store.HAIR[index]).setScale(0.35);
-    if (index > 3) {
-      image.setPosition(x - 940,812.50);
-    }
-  } 
-  for (let index = 0; index < this.store.sbabt.length; index++) {
-    let x = 603.50  + (index * 250);
-    let image = this.add.image(x, 510.50, this.store.sbabt[index]).setScale(0.4);
-    if (index > 3) {
-      image.setPosition(x - 940, 910.50);
-    }
-  }
-}
-
-
-this.meut = this.add.image(1800, 80, 'nomeut').setScale(0);
-this.meut.setInteractive({ useHandCursor: true });
-this.meut.on('pointerdown', () => this.clickMeut());
-
-this.music = this.add.image(1800, 80, 'music').setScale(0);
-this.music.setInteractive({ useHandCursor: true });
-this.music.on('pointerdown', () => this.clickMusic());
-
-this.parametre = this.add.image(1800, 80, 'parametre').setScale(1);
-this.parametre.setInteractive({ useHandCursor: true });
-this.parametre.on('pointerdown', () => this.parametreGame());
-this.fullscreenButton = this.add.image(80, 80, 'fullscreen').setScale(0.1)
-this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",function() {
-  if(this.scene.scale.isFullscreen==false) {
-      this.scene.scale.startFullscreen();
-  }
-  else {
-      this.scene.scale.stopFullscreen();
-  }
+      if (this.room1) {
+        this.room1.destroy();
+        this.valide.destroy();
+      }
+      // Afficher l'image de fond du stage
+    this.bgStage = this.add.image(1920 / 2, 1080 / 2, 'bgStage');
+      // Mise à jour du stage
+      if (this.stagenum == this.selectedStage.slice(-1)) {
+        this.stagenum += 1;
+      }
+      for (let index = 1; index <= 8; index++) {
+        let x = 237 * index;
+        
+        this.stage = this.add.image(x + 360, 449, 'stage' + index);
   
- })
-}
+        if (this.stage.texture.key === 'stage' + this.stagenum) {
+          this.stage.setInteractive({ useHandCursor: true });
+          this.stage.setTexture('stage1');
+          this.stage.on('pointerdown', () => this.validSt('stage' + index));  // تم تمرير اسم الـ "stage" هنا
+        }
+  
+        if (index > 4) {
+          this.stage.setPosition(x - 579, 865, 50);
+        }
+      }
+        // let lettre = this.textArabe[ind];////////////////////////////////////////////////////////////////////////////////////
+        //   this.ArabeText = this.add.text(buttonX+15, buttonY, lettre);
+        //   this.ArabeText.setInteractive({ useHandCursor: true });
+          
+    
+        //   this.ArabeText.on('pointerdown', () => this.clickButtonText(lettre, buttonX, buttonY));
 
-  validSt (){
+    
+      if ( this.stagenum >=2) {
+        
+        // Stocker l'état actuel du personnage dans `this.store`
+    this.store.miniDra.push(this.miniDara.texture.key);
+    this.store.clothes.push(this.image1.texture.key);
+    this.store.HAIR.push(this.cha3r.texture.key);
+    this.store.sbabt.push(this.sabat.texture.key);
+
+    for (let index = 0; index < this.store.miniDra.length; index++) {
+      let x = 603 + (index * 250);
+      let image = this.add.image(x, 363.50, this.store.miniDra[index]).setScale(0.3);
+      if (index > 3) {
+        image.setPosition(x - 940, 771.50);
+      }
+    } 
+    for (let index = 0; index < this.store.clothes.length; index++) {
+      let x = 603 + (index * 250);
+      let image = this.add.image(x, 465, this.store.clothes[index]).setScale(0.3);
+      if (index > 3) {
+        image.setPosition(x - 940, 865);
+      }
+    } 
+    for (let index = 0; index < this.store.HAIR.length; index++) {
+      let x = 599.50 + (index * 250);
+      let image = this.add.image(x, 412.50 , this.store.HAIR[index]).setScale(0.32);
+      if (index > 3) {
+        image.setPosition(x - 940,812.50);
+      }
+    } 
+    for (let index = 0; index < this.store.sbabt.length; index++) {
+      let x = 603.50  + (index * 250);
+      let image = this.add.image(x, 510.50, this.store.sbabt[index]).setScale(0.4);
+      if (index > 3) {
+        image.setPosition(x - 940, 910.50);
+      }
+    }
+  }
+
+
+  this.meut = this.add.image(1800, 80, 'nomeut').setScale(0);
+  this.meut.setInteractive({ useHandCursor: true });
+  this.meut.on('pointerdown', () => this.clickMeut());
+
+  this.music = this.add.image(1800, 80, 'music').setScale(0);
+  this.music.setInteractive({ useHandCursor: true });
+  this.music.on('pointerdown', () => this.clickMusic());
+
+  this.parametre = this.add.image(1800, 80, 'parametre').setScale(1);
+  this.parametre.setInteractive({ useHandCursor: true });
+  this.parametre.on('pointerdown', () => this.parametreGame());
+  this.fullscreenButton = this.add.image(80, 80, 'fullscreen').setScale(0.1);
+      this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown", () => {
+          if (this.scale.isFullscreen === false) {
+              this.scale.startFullscreen();
+              this.scale.canvas.style.width = '100%';
+              this.scale.canvas.style.height = '100vh';
+              this.scale.canvas.style.borderRadius = '0px'; // Correction de 'border.raduis' à 'borderRadius'
+              this.scale.canvas.style.marginTop = '0vh'; // Correction de 'margin.top' à 'marginTop'
+              this.scale.canvas.style.marginLeft = '0%'; // Correction de 'margin.left' à 'marginLeft'
+          } else {
+              this.scale.stopFullscreen();
+              this.scale.canvas.style.width = ''; // Réinitialiser à la valeur par défaut
+              this.scale.canvas.style.height = ''; // Réinitialiser à la valeur par défaut
+              this.scale.canvas.style.borderRadius = ''; // Réinitialiser à la valeur par défaut
+              this.scale.canvas.style.marginTop = ''; // Réinitialiser à la valeur par défaut
+              this.scale.canvas.style.marginLeft = ''; // Réinitialiser à la valeur par défaut
+          }
+      });
+  }   
+
+
+  validSt (stageName){
+    this.selectedStage = stageName; 
+    
+
+    
+    
+
     this.bgStage.setVisible(false);
     this.stage.setInteractive({ useHandCursor: false });
     this.room1 = this.add.image(1920 / 2, 1080 / 2, 'room1');
@@ -478,13 +506,21 @@ this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",f
 
     this.add.image(2823/ 2, 1314 / 2, 'caracter');
 
+
    // Initialize the images for clothes, hair, and shoes
    this.sabat = this.add.image(1414.50, 1021.50, );
    this.image1 = this.add.image(1411.50, 717.50, );
    this.miniDara = this.add.image(1411.50 , 345,);
    this.cha3r = this.add.image(1402 , 491.50, );
 
-
+   // Convert selectedStage's last character to a number for comparison
+if (this.stagenum > parseInt(this.selectedStage.slice(-1))) {
+  // Correctly use the index to access the stored textures
+  this.sabat = this.add.image(1414.50, 1021.50, this.store.sbabt[this.selectedStage.slice(-1)-1]);
+  this.image1 = this.add.image(1411.50, 717.50, this.store.clothes[this.selectedStage.slice(-1)-1]);
+  this.miniDara = this.add.image(1411.50, 345, this.store.miniDra[this.selectedStage.slice(-1)-1]);
+  this.cha3r = this.add.image(1402, 491.50, this.store.HAIR[this.selectedStage.slice(-1)-1]);
+}
     //action flish
     this.flish_right = this.add.image(680, 880, 'flish-right');
     this.flish_right.setInteractive({ useHandCursor: true });
@@ -509,16 +545,24 @@ this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",f
     this.parametre.setInteractive({ useHandCursor: true });
     this.parametre.on('pointerdown', () => this.parametreGame());
 
-this.fullscreenButton = this.add.image(80, 80, 'fullscreen').setScale(0.1)
-this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",function() {
-  if(this.scene.scale.isFullscreen==false) {
-      this.scene.scale.startFullscreen();
-  }
-  else {
-      this.scene.scale.stopFullscreen();
-  }
-  
- })
+    this.fullscreenButton = this.add.image(80, 80, 'fullscreen').setScale(0.1);
+    this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown", () => {
+        if (this.scale.isFullscreen === false) {
+            this.scale.startFullscreen();
+            this.scale.canvas.style.width = '100%';
+            this.scale.canvas.style.height = '100vh';
+            this.scale.canvas.style.borderRadius = '0px'; // Correction de 'border.raduis' à 'borderRadius'
+            this.scale.canvas.style.marginTop = '0vh'; // Correction de 'margin.top' à 'marginTop'
+            this.scale.canvas.style.marginLeft = '0%'; // Correction de 'margin.left' à 'marginLeft'
+        } else {
+            this.scale.stopFullscreen();
+            this.scale.canvas.style.width = ''; // Réinitialiser à la valeur par défaut
+            this.scale.canvas.style.height = ''; // Réinitialiser à la valeur par défaut
+            this.scale.canvas.style.borderRadius = ''; // Réinitialiser à la valeur par défaut
+            this.scale.canvas.style.marginTop = ''; // Réinitialiser à la valeur par défaut
+            this.scale.canvas.style.marginLeft = ''; // Réinitialiser à la valeur par défaut
+        }
+    });
 
     // this.clickeff = this.sound.add('clickeff');
     // this.cute = this.sound.add('cute')
@@ -584,6 +628,7 @@ this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",f
     }
   }
 
+
   clickMusic() {
     if (this.x === 'music') {
       this.music.setTexture('nomusic');
@@ -594,6 +639,7 @@ this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown",f
     }
   }
 }
+
 
 game.scene.add('Malabis', Malabis);
 game.scene.add('startGame', startGame);
