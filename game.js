@@ -412,21 +412,19 @@ class Malabis extends Phaser.Scene {
           this.stage.setPosition(x - 579, 865, 50);
         }
       }
-        // let lettre = this.textArabe[ind];////////////////////////////////////////////////////////////////////////////////////
-        //   this.ArabeText = this.add.text(buttonX+15, buttonY, lettre);
-        //   this.ArabeText.setInteractive({ useHandCursor: true });
-          
-    
-        //   this.ArabeText.on('pointerdown', () => this.clickButtonText(lettre, buttonX, buttonY));
-
-    
-      if ( this.stagenum >=2) {
         
-        // Stocker l'état actuel du personnage dans `this.store`
-    this.store.miniDra.push(this.miniDara.texture.key);
-    this.store.clothes.push(this.image1.texture.key);
-    this.store.HAIR.push(this.cha3r.texture.key);
-    this.store.sbabt.push(this.sabat.texture.key);
+      console.log(this.stagenum -1)
+      console.log(this.selectedStage.slice(-1))
+      if ( this.stagenum >=2 ) {
+        if (this.stagenum-1 == this.selectedStage.slice(-1)) {
+           // Stocker l'état actuel du personnage dans `this.store`
+          this.store.miniDra.push(this.miniDara.texture.key);
+          this.store.clothes.push(this.image1.texture.key);
+          this.store.HAIR.push(this.cha3r.texture.key);
+          this.store.sbabt.push(this.sabat.texture.key);
+        }
+       
+    
 
     for (let index = 0; index < this.store.miniDra.length; index++) {
       let x = 603 + (index * 250);
