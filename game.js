@@ -227,6 +227,9 @@ class LoadingScene extends Phaser.Scene {
       this.load.image(`shoes${i}`, `./assets/1x/sabat${i}.png`);
     }
 
+    for (let i = 0; i <= 5; i++) {
+      this.load.image(`shose${i}`, `./assets/1x/photo sbabt/shose${i}.png`);
+    }
     // Load miniDara assets
     for (let i = 1; i <= 6; i++) {
       this.load.image(`miniDra${i}`, `./assets/1x/miniDra${i}.png`);
@@ -267,7 +270,7 @@ class Malabis extends Phaser.Scene {
     this.m = 'nomeut';
     this.x = 'music';
     this.click = 2;
-    this.stagenum = 0;
+    this.stagenum = 1;
     this.store = {
       miniDra:[],
       clothes:[],
@@ -310,7 +313,7 @@ class Malabis extends Phaser.Scene {
     if (this.swith[this.fin] === 'sbabt') {
       for (let index = 0; index < this.chose.sbabt.length; index++) {
         var x = 443.50  + (index *200);
-        let image = this.add.image(x, 380.50, this.chose.sbabt[index]);
+        let image = this.add.image(x, 380.50, 'shose'+index);
         image.setInteractive({ useHandCursor: true });
         image.on('pointerdown', () => this.ChangeShoes(this.chose.sbabt[index]));
         if (index > 2) {
@@ -393,6 +396,8 @@ class Malabis extends Phaser.Scene {
       }
       // Afficher l'image de fond du stage
     this.bgStage = this.add.image(1920 / 2, 1080 / 2, 'bgStage');
+
+    
       // Mise à jour du stage
       if (this.stagenum == this.selectedStage.slice(-1)) {
         this.stagenum += 1;
@@ -413,50 +418,56 @@ class Malabis extends Phaser.Scene {
         }
       }
         
-      console.log(this.stagenum -1)
-      console.log(this.selectedStage.slice(-1))
-      if ( this.stagenum >=2 ) {
-        if (this.stagenum-1 == this.selectedStage.slice(-1)) {
-           // Stocker l'état actuel du personnage dans `this.store`
-          this.store.miniDra.push(this.miniDara.texture.key);
-          this.store.clothes.push(this.image1.texture.key);
-          this.store.HAIR.push(this.cha3r.texture.key);
-          this.store.sbabt.push(this.sabat.texture.key);
-        }
-       
-    
+      console.log(this.stagenum )
+    console.log(parseInt(this.selectedStage.slice(-1)[0]))
+    if ( this.stagenum >=2 ) {
+      if (this.stagenum == this.selectedStage.slice(-1)) {
+         // Stocker l'état actuel du personnage dans `this.store`
+        this.store.miniDra.push(this.miniDara.texture.key);
+        this.store.clothes.push(this.image1.texture.key);
+        this.store.HAIR.push(this.cha3r.texture.key);
+        this.store.sbabt.push(this.sabat.texture.key);
+      }else{
+        this.store.miniDra[this.selectedStage.slice(-1)-1]=this.miniDara.texture.key;
+        this.store.clothes[this.selectedStage.slice(-1)-1]=this.image1.texture.key;
+        this.store.HAIR[this.selectedStage.slice(-1)-1]=this.cha3r.texture.key;
+        this.store.sbabt[this.selectedStage.slice(-1)-1]=this.sabat.texture.key;
+      }
+     
+  
 
-    for (let index = 0; index < this.store.miniDra.length; index++) {
-      let x = 603 + (index * 250);
-      let image = this.add.image(x, 363.50, this.store.miniDra[index]).setScale(0.3);
-      if (index > 3) {
-        image.setPosition(x - 940, 771.50);
-      }
-    } 
-    for (let index = 0; index < this.store.clothes.length; index++) {
-      let x = 603 + (index * 250);
-      let image = this.add.image(x, 465, this.store.clothes[index]).setScale(0.3);
-      if (index > 3) {
-        image.setPosition(x - 940, 865);
-      }
-    } 
-    for (let index = 0; index < this.store.HAIR.length; index++) {
-      let x = 599.50 + (index * 250);
-      let image = this.add.image(x, 412.50 , this.store.HAIR[index]).setScale(0.32);
-      if (index > 3) {
-        image.setPosition(x - 940,812.50);
-      }
-    } 
-    for (let index = 0; index < this.store.sbabt.length; index++) {
-      let x = 603.50  + (index * 250);
-      let image = this.add.image(x, 510.50, this.store.sbabt[index]).setScale(0.4);
-      if (index > 3) {
-        image.setPosition(x - 940, 910.50);
-      }
+  for (let index = 0; index < this.store.miniDra.length; index++) {
+    let x = 603 + (index * 250);
+    let image = this.add.image(x, 363.50, this.store.miniDra[index]).setScale(0.3);
+    if (index > 3) {
+      image.setPosition(x - 940, 771.50);
+    }
+  } 
+  for (let index = 0; index < this.store.clothes.length; index++) {
+    let x = 603 + (index * 250);
+    let image = this.add.image(x, 465, this.store.clothes[index]).setScale(0.3);
+    if (index > 3) {
+      image.setPosition(x - 940, 865);
+    }
+  } 
+  for (let index = 0; index < this.store.HAIR.length; index++) {
+    let x = 599.50 + (index * 250);
+    let image = this.add.image(x, 412.50 , this.store.HAIR[index]).setScale(0.32);
+    if (index > 3) {
+      image.setPosition(x - 940,812.50);
+    }
+  } 
+  for (let index = 0; index < this.store.sbabt.length; index++) {
+    let x = 603.50  + (index * 250);
+    let image = this.add.image(x, 510.50, this.store.sbabt[index]).setScale(0.4);
+    if (index > 3) {
+      image.setPosition(x - 940, 910.50);
     }
   }
+}
 
-
+      
+     
   this.meut = this.add.image(1800, 80, 'nomeut').setScale(0);
   this.meut.setInteractive({ useHandCursor: true });
   this.meut.on('pointerdown', () => this.clickMeut());
@@ -468,7 +479,8 @@ class Malabis extends Phaser.Scene {
   this.parametre = this.add.image(1800, 80, 'parametre').setScale(1);
   this.parametre.setInteractive({ useHandCursor: true });
   this.parametre.on('pointerdown', () => this.parametreGame());
-  this.fullscreenButton = this.add.image(80, 80, 'fullscreen').setScale(0.1);
+  
+      this.fullscreenButton = this.add.image(80, 80, 'fullscreen').setScale(0.1);
       this.fullscreenButton.setInteractive({ useHandCursor: true }).on("pointerdown", () => {
           if (this.scale.isFullscreen === false) {
               this.scale.startFullscreen();
