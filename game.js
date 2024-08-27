@@ -153,23 +153,27 @@ class LoadingScene extends Phaser.Scene {
   }
 
   preload() {
-    // Display the loading image
-    this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2 - 100, 'miniLatifa').setScale(0.5);
-
-    // Create a progress box with a border
+    // Définir les dimensions de la caméra et calculer le centre
+    const width = this.cameras.main.width;
+    const height = this.cameras.main.height;
+    
+    // Afficher l'image de miniLatifa
+    const miniLatifa = this.add.image(width / 2 - 150, height /2.18, 'miniLatifa').setScale(0.5);
+    
+    // Créer une boîte de progression avec une bordure
     let progressBox = this.add.graphics();
     progressBox.fillStyle(0x222222, 0.8);
-    progressBox.fillRect(this.cameras.main.width / 2 - 165, this.cameras.main.height / 2, 330, 50);
+    progressBox.fillRect(width / 2 - 165, height / 2, 330, 50);
     progressBox.lineStyle(4, 0xffffff, 1);
-    progressBox.strokeRect(this.cameras.main.width / 2 - 165, this.cameras.main.height / 2, 330, 50);
+    progressBox.strokeRect(width / 2 - 165, height / 2, 330, 50);
 
-    // Create a progress bar
+    // Créer une barre de progression
     let progressBar = this.add.graphics();
 
-    // Add loading text with animation
+    // Ajouter du texte de chargement avec animation
     let loadingText = this.make.text({
-      x: this.cameras.main.width / 2,
-      y: this.cameras.main.height / 2 - 30,
+      x: width / 2,
+      y: height / 2 - 30,
       text: 'Loading...',
       style: {
         font: '20px monospace',
@@ -185,21 +189,26 @@ class LoadingScene extends Phaser.Scene {
       yoyo: true
     });
 
-    // Update the progress bar
+    // Mettre à jour la barre de progression
     this.load.on('progress', (value) => {
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
-      progressBar.fillRect(this.cameras.main.width / 2 - 150, this.cameras.main.height / 2 + 10, 300 * value, 30);
+      progressBar.fillRect(width / 2 - 150, height / 2 + 10, 300 * value, 30);
+      
+      // Mettre à jour la position de miniLatifa pour suivre la barre de progression
+      miniLatifa.x = width / 2 - 150 + 300 * value;
     });
 
-    // Clean up once the loading is complete
+    // Nettoyer une fois le chargement terminé
     this.load.on('complete', () => {
       progressBar.destroy();
       progressBox.destroy();
       loadingText.destroy();
     });
 
-    // Load necessary assets for the game
+    // Charger les assets nécessaires pour le jeu
+    this.load.image('miniLatifa', './assets/1x/miniLatifa.png'); // Assurez-vous de charger l'image de miniLatifa
+
     this.load.image('room1', './assets/room.png');
     this.load.image('flish-left', './assets/flish-left.png');
     this.load.image('flish-right', './assets/flish-right.png');
@@ -230,6 +239,7 @@ class LoadingScene extends Phaser.Scene {
     for (let i = 0; i <= 5; i++) {
       this.load.image(`shose${i}`, `./assets/1x/photo sbabt/shose${i}.png`);
     }
+
     // Load miniDara assets
     for (let i = 1; i <= 6; i++) {
       this.load.image(`miniDra${i}`, `./assets/1x/miniDra${i}.png`);
@@ -242,10 +252,11 @@ class LoadingScene extends Phaser.Scene {
   }
 
   create() {
-    // Transition to the main scene once assets are loaded
+    // Transition vers la scène principale une fois que les assets sont chargés
     this.scene.start('Malabis');
   }
 }
+
 
 
 
@@ -279,6 +290,7 @@ class Malabis extends Phaser.Scene {
     }
 
     this.selectedStage = '';
+    this.check=0
   }
 
   preload() {
@@ -349,9 +361,17 @@ class Malabis extends Phaser.Scene {
   }
 
   clickRight() {
-    this.fin = (this.fin + 1) % this.swith.length;
-    this.updateImages();
+    if (this.check==1 ||this.check==2 ||this.check==3 ) {
+      this.fin = (this.fin + 1) % this.swith.length;
+      this.updateImages();
     // this.clickeff.play();
+      this.check=0
+    }
+    if (this.check==4) {
+      this.fin = (this.fin + 1) % this.swith.length;
+      this.updateImages();
+    // this.clickeff.play();
+    }
   }
 
   clickLeft() {
@@ -364,17 +384,19 @@ class Malabis extends Phaser.Scene {
 
       this.image1.setTexture(clothes);
     // this.cute.play();
-    
+      this.check=2
   }
 
   ChangeHair(hair) {
     this.cha3r.setTexture(hair);
     // this.cute.play();
+    this.check=3
   }
   
   ChangeminiDra(miniDra) {
     if(miniDra){
       this.miniDara.setTexture(miniDra);
+      this.check=1
     }
   
       
@@ -383,7 +405,7 @@ class Malabis extends Phaser.Scene {
 
   ChangeShoes(sho) {
     this.sabat.setTexture(sho);
-
+    this.check=4
     // this.cute.play();
   }
 
@@ -419,7 +441,7 @@ class Malabis extends Phaser.Scene {
       }
         
       console.log(this.stagenum )
-    console.log(parseInt(this.selectedStage.slice(-1)[0]))
+      console.log(parseInt(this.selectedStage.slice(-1)[0]))
     if ( this.stagenum >=2 ) {
       if (this.stagenum == this.selectedStage.slice(-1)) {
          // Stocker l'état actuel du personnage dans `this.store`
@@ -437,28 +459,28 @@ class Malabis extends Phaser.Scene {
   
 
   for (let index = 0; index < this.store.miniDra.length; index++) {
-    let x = 603 + (index * 250);
+    let x = 603 + (index * 235);
     let image = this.add.image(x, 363.50, this.store.miniDra[index]).setScale(0.3);
     if (index > 3) {
       image.setPosition(x - 940, 771.50);
     }
   } 
   for (let index = 0; index < this.store.clothes.length; index++) {
-    let x = 603 + (index * 250);
+    let x = 603 + (index * 235);
     let image = this.add.image(x, 465, this.store.clothes[index]).setScale(0.3);
     if (index > 3) {
       image.setPosition(x - 940, 865);
     }
   } 
   for (let index = 0; index < this.store.HAIR.length; index++) {
-    let x = 599.50 + (index * 250);
+    let x = 599.50 + (index * 235);
     let image = this.add.image(x, 412.50 , this.store.HAIR[index]).setScale(0.32);
     if (index > 3) {
       image.setPosition(x - 940,812.50);
     }
   } 
   for (let index = 0; index < this.store.sbabt.length; index++) {
-    let x = 603.50  + (index * 250);
+    let x = 603.50  + (index * 235);
     let image = this.add.image(x, 510.50, this.store.sbabt[index]).setScale(0.4);
     if (index > 3) {
       image.setPosition(x - 940, 910.50);
