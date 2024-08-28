@@ -495,7 +495,7 @@ ChangeShoes(sho) {
         HAIR: false,
         sbabt: false
     };
-
+    this.check = 0;
       if (this.room1) {
         this.room1.destroy();
         this.valide.destroy();
