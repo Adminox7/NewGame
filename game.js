@@ -493,6 +493,7 @@ ChangeShoes(sho) {
     this.sabat.setTexture(sho);
     this.check = 4;
     this.selectionMade.sbabt = true; // Mark shoes as selected
+    this.valide.on('pointerdown', () => this.valider());
 }
 
 
@@ -536,8 +537,6 @@ ChangeShoes(sho) {
         }
       }
         
-      console.log(this.stagenum )
-      console.log(parseInt(this.selectedStage.slice(-1)[0]))
     if ( this.stagenum >=2 ) {
       if (this.stagenum == this.selectedStage.slice(-1)) {
          // Stocker l'état actuel du personnage dans `this.store`
@@ -699,9 +698,10 @@ if (this.stagenum > parseInt(this.selectedStage.slice(-1))) {
 
     this.valide = this.add.image(270,930,'valide');
     this.valide.setInteractive({useHandCursor:true})
-    this.valide.on('pointerdown', () => this.valider());
 
-       
+      
+
+    
     
   }
 
@@ -779,7 +779,9 @@ if (this.stagenum > parseInt(this.selectedStage.slice(-1))) {
     }if(this.checkAnawin == 4 && this.anawin) {
       this.anawin.setTexture('hida2');
     }
+
   }
+  
 }
 
 
