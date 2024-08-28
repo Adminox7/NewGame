@@ -474,6 +474,11 @@ clickLeft() {
         this.miniDara.setTexture(miniDra);
         this.check = 1;
         this.selectionMade.miniDra = true; // Mark miniDra as selected
+
+        if (this.stagenum >= this.selectedStage.slice(-1)) {
+          this.stagenum += 1;
+        }
+    
     }
 }
 
@@ -481,18 +486,30 @@ ChangeClothes(clothes) {
     this.image1.setTexture(clothes);
     this.check = 2;
     this.selectionMade.clothes = true; // Mark clothes as selected
+
+    if (this.stagenum >= this.selectedStage.slice(-1)) {
+      this.stagenum += 1;
+    }
+
 }
 
 ChangeHair(hair) {
     this.cha3r.setTexture(hair);
     this.check = 3;
     this.selectionMade.HAIR = true; // Mark hair as selected
+
+    if (this.stagenum >= this.selectedStage.slice(-1)) {
+      this.stagenum += 1;
+    }
+
 }
 
 ChangeShoes(sho) {
     this.sabat.setTexture(sho);
     this.check = 4;
     this.selectionMade.sbabt = true; // Mark shoes as selected
+   
+    this.valide.on('pointerdown', () => this.valider());
 }
 
 
@@ -536,8 +553,6 @@ ChangeShoes(sho) {
         }
       }
         
-      console.log(this.stagenum )
-      console.log(parseInt(this.selectedStage.slice(-1)[0]))
     if ( this.stagenum >=2 ) {
       if (this.stagenum == this.selectedStage.slice(-1)) {
          // Stocker l'état actuel du personnage dans `this.store`
@@ -550,6 +565,7 @@ ChangeShoes(sho) {
         this.store.clothes[this.selectedStage.slice(-1)-1]=this.image1.texture.key;
         this.store.HAIR[this.selectedStage.slice(-1)-1]=this.cha3r.texture.key;
         this.store.sbabt[this.selectedStage.slice(-1)-1]=this.sabat.texture.key;
+        
       }
      
   
@@ -563,7 +579,7 @@ ChangeShoes(sho) {
   } 
   for (let index = 0; index < this.store.clothes.length; index++) {
     let x = 603 + (index * 235);
-    let image = this.add.image(x, 465, this.store.clothes[index]).setScale(0.3);
+    let image = this.add.image(x, 465, this.store.clothes[index]).setScale(0.28);
     if (index > 3) {
       image.setPosition(x - 940, 865);
     }
@@ -577,7 +593,7 @@ ChangeShoes(sho) {
   } 
   for (let index = 0; index < this.store.sbabt.length; index++) {
     let x = 603.50  + (index * 235);
-    let image = this.add.image(x, 510.50, this.store.sbabt[index]).setScale(0.4);
+    let image = this.add.image(x, 548.50, this.store.sbabt[index]).setScale(0.4);
     if (index > 3) {
       image.setPosition(x - 940, 910.50);
     }
@@ -650,6 +666,7 @@ if (this.stagenum > parseInt(this.selectedStage.slice(-1))) {
   this.image1 = this.add.image(1411.50, 717.50, this.store.clothes[this.selectedStage.slice(-1)-1]);
   this.miniDara = this.add.image(1411.50, 345, this.store.miniDra[this.selectedStage.slice(-1)-1]);
   this.cha3r = this.add.image(1402, 491.50, this.store.HAIR[this.selectedStage.slice(-1)-1]);
+  
 }
     //action flish
     this.flish_right = this.add.image(680, 880, 'flish-right');
@@ -698,11 +715,7 @@ if (this.stagenum > parseInt(this.selectedStage.slice(-1))) {
     // this.cute = this.sound.add('cute')
 
     this.valide = this.add.image(270,930,'valide');
-    this.valide.setInteractive({useHandCursor:true})
-    this.valide.on('pointerdown', () => this.valider());
-
-       
-    
+    this.valide.setInteractive({useHandCursor:true}) 
   }
 
 
@@ -779,7 +792,9 @@ if (this.stagenum > parseInt(this.selectedStage.slice(-1))) {
     }if(this.checkAnawin == 4 && this.anawin) {
       this.anawin.setTexture('hida2');
     }
+
   }
+  
 }
 
 
