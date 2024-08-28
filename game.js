@@ -249,6 +249,10 @@ class LoadingScene extends Phaser.Scene {
     for (let i = 1; i <= 8; i++) {
       this.load.image(`stage${i}`, `./assets/stage/stage${i}.png`);
     }
+    // load shipes
+    for (let i = 1; i <= 4; i++) {
+      this.load.image(`shipe${i}`, `./assets/shipe${i}.png`);
+    }
   }
 
   create() {
@@ -390,9 +394,35 @@ clickRight() {
   if (this.selectionMade[this.swith[this.fin]]) {
       this.fin = (this.fin + 1) % this.swith.length; // Move to the next category
       this.updateImages();
-      this.check = 0; // Reset check
-  } else {
-      console.log("Select an item from the current category first.");
+     
+  } else if (this.check == 0){
+    const shipeImage = this.add.image(1652, 276, 'shipe1');
+
+      // Set a timer to remove 'shipe1' after 3 seconds
+      this.time.delayedCall(2500, () => {
+          shipeImage.destroy();  // Destroy the image after 3000 milliseconds (3 seconds)
+      });
+  }else if (this.check == 1){
+    const shipeImage = this.add.image(1652, 276, 'shipe2');
+
+      // Set a timer to remove 'shipe1' after 3 seconds
+      this.time.delayedCall(2500, () => {
+          shipeImage.destroy();  // Destroy the image after 3000 milliseconds (3 seconds)
+      });
+  }else if (this.check == 2){
+    const shipeImage = this.add.image(1652, 276, 'shipe3');
+
+      // Set a timer to remove 'shipe1' after 3 seconds
+      this.time.delayedCall(2500, () => {
+          shipeImage.destroy();  // Destroy the image after 3000 milliseconds (3 seconds)
+      });
+  }else if (this.check == 3){
+    const shipeImage = this.add.image(1652, 276, 'shipe4');
+
+      // Set a timer to remove 'shipe1' after 3 seconds
+      this.time.delayedCall(2500, () => {
+          shipeImage.destroy();  // Destroy the image after 3000 milliseconds (3 seconds)
+      });
   }
 }
 
@@ -422,7 +452,7 @@ clickLeft() {
 
   // Update images after changing the category
   this.updateImages();
-  this.check = 0; // Reset check
+  // this.check = 0; // Reset check
 }
 
 
