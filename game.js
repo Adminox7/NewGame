@@ -220,6 +220,11 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('nomusic', './assets/nomusic.png');
     this.load.image('valide', './assets/valide.png');
     this.load.image('bgStage', './assets/bgMalabis.png');
+    this.load.image('hida2', './assets/حـذاء.png');
+    this.load.image('khimar', './assets/خمــار.png');
+    this.load.image('ghita2', './assets/غطاء الرأس.png');
+    this.load.image('fostan', './assets/فسـتا ن.png');
+
 
     // Load hair assets
     for (let i = 1; i <= 6; i++) {
@@ -309,6 +314,7 @@ class Malabis extends Phaser.Scene {
     sbabt: 0
   };
 
+  this.checkAnawin = 1;
   }
 
   preload() {
@@ -318,7 +324,7 @@ class Malabis extends Phaser.Scene {
   create() {
     // console.log(this.store['miniDra'][1])
     this.valider()
-   
+
   }
 
 
@@ -331,6 +337,7 @@ class Malabis extends Phaser.Scene {
     // Determine which set of images to display based on `this.fin` index
     switch (this.swith[this.fin]) {
         case 'miniDra':
+          // this.anawin.setTexture('ghita2');
             for (let index = 0; index < this.chose.miniDra.length; index++) {
                 var x = 234 + (index * 200);
                 let image = this.add.image(x + 200, 392, this.chose.miniDra[index]);
@@ -344,6 +351,8 @@ class Malabis extends Phaser.Scene {
             break;
 
         case 'clothes':
+          this.checkAnawin=2;
+          // this.anawin.setTexture('fostan');
             for (let index = 0; index < this.chose.clothes.length; index++) {
                 var x = 443.50 + (index * 200);
                 let image = this.add.image(x, 380.50, this.chose.clothes[index]).setScale(0.3);
@@ -357,6 +366,8 @@ class Malabis extends Phaser.Scene {
             break;
 
         case 'sbabt':
+          this.checkAnawin=4;
+          // this.anawin.setTexture('hida2');
             for (let index = 0; index < this.chose.sbabt.length; index++) {
                 var x = 443.50 + (index * 200);
                 let image = this.add.image(x, 380.50, 'shose' + index);
@@ -370,6 +381,8 @@ class Malabis extends Phaser.Scene {
             break;
 
         case 'HAIR':
+          this.checkAnawin=3;
+          // this.anawin.setTexture('khimar');
             for (let index = 0; index < this.chose.HAIR.length; index++) {
                 var x = 443.50 + (index * 200);
                 let image = this.add.image(x, 370.50, this.chose.HAIR[index]).setScale(0.5);
@@ -394,7 +407,6 @@ clickRight() {
   if (this.selectionMade[this.swith[this.fin]]) {
       this.fin = (this.fin + 1) % this.swith.length; // Move to the next category
       this.updateImages();
-     
   } else if (this.check == 0){
     const shipeImage = this.add.image(1652, 276, 'shipe1');
 
@@ -495,7 +507,7 @@ ChangeShoes(sho) {
         HAIR: false,
         sbabt: false
     };
-    this.check = 0;
+    this.check =0
       if (this.room1) {
         this.room1.destroy();
         this.valide.destroy();
@@ -614,7 +626,7 @@ ChangeShoes(sho) {
 
     
     
-
+    
     this.bgStage.setVisible(false);
     this.stage.setInteractive({ useHandCursor: false });
     this.room1 = this.add.image(1920 / 2, 1080 / 2, 'room1');
@@ -622,14 +634,15 @@ ChangeShoes(sho) {
     // this.vit.skew = 45;
 
     this.add.image(2823/ 2, 1314 / 2, 'caracter');
-
+    
 
    // Initialize the images for clothes, hair, and shoes
    this.sabat = this.add.image(1414.50, 1021.50, );
    this.image1 = this.add.image(1411.50, 717.50, );
    this.miniDara = this.add.image(1411.50 , 345,);
    this.cha3r = this.add.image(1402 , 491.50, );
-
+   
+   this.anawin =this.add.image(643.75, 204.42,);
    // Convert selectedStage's last character to a number for comparison
 if (this.stagenum > parseInt(this.selectedStage.slice(-1))) {
   // Correctly use the index to access the stored textures
@@ -753,6 +766,18 @@ if (this.stagenum > parseInt(this.selectedStage.slice(-1))) {
     } else if (this.x === 'nomusic') {
       this.music.setTexture('music');
       this.x = 'music';
+    }
+  }
+
+  update(){
+    if (this.checkAnawin == 1 && this.anawin) {
+      this.anawin.setTexture('ghita2');
+    }if(this.checkAnawin == 2 && this.anawin) {
+      this.anawin.setTexture('fostan');
+    }if(this.checkAnawin == 3 && this.anawin) {
+      this.anawin.setTexture('khimar');
+    }if(this.checkAnawin == 4 && this.anawin) {
+      this.anawin.setTexture('hida2');
     }
   }
 }
