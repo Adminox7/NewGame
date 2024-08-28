@@ -290,7 +290,21 @@ class Malabis extends Phaser.Scene {
     }
 
     this.selectedStage = '';
-    this.check=0
+    this.check=0;
+
+    this.selectionMade = {
+      miniDra: false,
+      clothes: false,
+      HAIR: false,
+      sbabt: false
+  };
+
+  this.clickLeftCounters = {
+    clothes: 0,
+    HAIR: 0,
+    sbabt: 0
+  };
+
   }
 
   preload() {
@@ -306,111 +320,151 @@ class Malabis extends Phaser.Scene {
 
 
   updateImages() {
-    // Détruire les images actuelles
+    // Clear current images
     this.currentImages.forEach(image => image.destroy());
     this.currentImages = [];
 
-    if (this.swith[this.fin] === 'clothes') {
-      for (let index = 0; index < this.chose.clothes.length; index++) {
-        var x = 443.50 + (index * 200);
-        let image = this.add.image(x, 380.50, this.chose.clothes[index]).setScale(0.3);
-        image.setInteractive({ useHandCursor: true });
-        image.on('pointerdown', () => this.ChangeClothes(this.chose.clothes[index]));
-        if (index > 2) {
-          image.setPosition(x - 603.50, 631.50);
-        }
-        this.currentImages.push(image);
-      }
-    }
-    if (this.swith[this.fin] === 'sbabt') {
-      for (let index = 0; index < this.chose.sbabt.length; index++) {
-        var x = 443.50  + (index *200);
-        let image = this.add.image(x, 380.50, 'shose'+index);
-        image.setInteractive({ useHandCursor: true });
-        image.on('pointerdown', () => this.ChangeShoes(this.chose.sbabt[index]));
-        if (index > 2) {
-          image.setPosition(x - 603.50, 631.50);
-        }
-        this.currentImages.push(image);
-      }
-    }
-    if (this.swith[this.fin] === 'miniDra') {
-      for (let index = 0; index < this.chose.miniDra.length; index++) {
-        var x = 234 + (index * 200);
-        let image = this.add.image(x+200, 392, this.chose.miniDra[index]);
-        image.setInteractive({ useHandCursor: true });
-        image.on('pointerdown', () => this.ChangeminiDra(this.chose.miniDra[index]));
-        if (index > 2) {
-          image.setPosition(x - 400, 650);
-        }
-        this.currentImages.push(image);
-      }
-    }
-    if (this.swith[this.fin] === 'HAIR') {
-      for (let index = 0; index < this.chose.HAIR.length; index++) {
-        var x = 443.50 + (index * 200);
-        let image = this.add.image(x, 370.50, this.chose.HAIR[index]).setScale(0.5);
-        image.setInteractive({ useHandCursor: true });
-        image.on('pointerdown', () => this.ChangeHair(this.chose.HAIR[index]));
-        if (index > 2) {
-          image.setPosition(x - 603.50, 630.50);
-        }
-        this.currentImages.push(image);
-      }
-    }
-  }
+    // Determine which set of images to display based on `this.fin` index
+    switch (this.swith[this.fin]) {
+        case 'miniDra':
+            for (let index = 0; index < this.chose.miniDra.length; index++) {
+                var x = 234 + (index * 200);
+                let image = this.add.image(x + 200, 392, this.chose.miniDra[index]);
+                image.setInteractive({ useHandCursor: true });
+                image.on('pointerdown', () => this.ChangeminiDra(this.chose.miniDra[index]));
+                if (index > 2) {
+                    image.setPosition(x - 400, 650);
+                }
+                this.currentImages.push(image);
+            }
+            break;
 
-  clickRight() {
-    if (this.check==1 ||this.check==2 ||this.check==3 ) {
-      this.fin = (this.fin + 1) % this.swith.length;
+        case 'clothes':
+            for (let index = 0; index < this.chose.clothes.length; index++) {
+                var x = 443.50 + (index * 200);
+                let image = this.add.image(x, 380.50, this.chose.clothes[index]).setScale(0.3);
+                image.setInteractive({ useHandCursor: true });
+                image.on('pointerdown', () => this.ChangeClothes(this.chose.clothes[index]));
+                if (index > 2) {
+                    image.setPosition(x - 603.50, 631.50);
+                }
+                this.currentImages.push(image);
+            }
+            break;
+
+        case 'sbabt':
+            for (let index = 0; index < this.chose.sbabt.length; index++) {
+                var x = 443.50 + (index * 200);
+                let image = this.add.image(x, 380.50, 'shose' + index);
+                image.setInteractive({ useHandCursor: true });
+                image.on('pointerdown', () => this.ChangeShoes(this.chose.sbabt[index]));
+                if (index > 2) {
+                    image.setPosition(x - 603.50, 631.50);
+                }
+                this.currentImages.push(image);
+            }
+            break;
+
+        case 'HAIR':
+            for (let index = 0; index < this.chose.HAIR.length; index++) {
+                var x = 443.50 + (index * 200);
+                let image = this.add.image(x, 370.50, this.chose.HAIR[index]).setScale(0.5);
+                image.setInteractive({ useHandCursor: true });
+                image.on('pointerdown', () => this.ChangeHair(this.chose.HAIR[index]));
+                if (index > 2) {
+                    image.setPosition(x - 603.50, 630.50);
+                }
+                this.currentImages.push(image);
+            }
+            break;
+
+        default:
+            console.error("Unknown category in swith: ", this.swith[this.fin]);
+            break;
+    }
+}
+
+
+clickRight() {
+  // Check if the current category has been selected
+  if (this.selectionMade[this.swith[this.fin]]) {
+      this.fin = (this.fin + 1) % this.swith.length; // Move to the next category
       this.updateImages();
-    // this.clickeff.play();
-      this.check=0
-    }
-    if (this.check==4) {
-      this.fin = (this.fin + 1) % this.swith.length;
-      this.updateImages();
-    // this.clickeff.play();
-    }
+      this.check = 0; // Reset check
+  } else {
+      console.log("Select an item from the current category first.");
+  }
+}
+
+
+clickLeft() {
+  // Determine the current category
+  const currentCategory = this.swith[this.fin];
+
+  // Check if the current category has been selected or use the click counter logic
+  if (currentCategory === 'clothes' && this.clickLeftCounters.clothes < 1) {
+      // Move left once if the current category is 'clothes'
+      this.fin = (this.fin - 1 + this.swith.length) % this.swith.length;
+      this.clickLeftCounters.clothes++; // Increment the counter for clothes
+  } else if (currentCategory === 'HAIR' && this.clickLeftCounters.HAIR < 2) {
+      // Move left twice if the current category is 'HAIR'
+      this.fin = (this.fin - 1 + this.swith.length) % this.swith.length;
+      this.clickLeftCounters.HAIR = 2; // Increment the counter for HAIR
+  } else if (currentCategory === 'sbabt') {
+      // Allow continuous left movement if the current category is 'sbabt'
+      this.fin = (this.fin - 1 + this.swith.length) % this.swith.length;
+
+  } else {
+      // If selection is needed or counter is exceeded
+      console.log("Select an item from the current category first or move through categories in the defined order.");
+      return; // Exit the function early
   }
 
-  clickLeft() {
-    this.fin = (this.fin - 1 + this.swith.length) % this.swith.length;
-    this.updateImages();
-    // this.clickeff.play();
-  }
+  // Update images after changing the category
+  this.updateImages();
+  this.check = 0; // Reset check
+}
 
-  ChangeClothes(clothes) {
 
-      this.image1.setTexture(clothes);
-    // this.cute.play();
-      this.check=2
-  }
 
-  ChangeHair(hair) {
-    this.cha3r.setTexture(hair);
-    // this.cute.play();
-    this.check=3
-  }
-  
   ChangeminiDra(miniDra) {
-    if(miniDra){
-      this.miniDara.setTexture(miniDra);
-      this.check=1
+    if (miniDra) {
+        this.miniDara.setTexture(miniDra);
+        this.check = 1;
+        this.selectionMade.miniDra = true; // Mark miniDra as selected
     }
-  
-      
-    // this.cute.play();
-  }
+}
 
-  ChangeShoes(sho) {
+ChangeClothes(clothes) {
+    this.image1.setTexture(clothes);
+    this.check = 2;
+    this.selectionMade.clothes = true; // Mark clothes as selected
+}
+
+ChangeHair(hair) {
+    this.cha3r.setTexture(hair);
+    this.check = 3;
+    this.selectionMade.HAIR = true; // Mark hair as selected
+}
+
+ChangeShoes(sho) {
     this.sabat.setTexture(sho);
-    this.check=4
-    // this.cute.play();
-  }
+    this.check = 4;
+    this.selectionMade.sbabt = true; // Mark shoes as selected
+}
+
 
 
     valider() {
+      this.fin = 0; // Reset to the index of 'miniDra' to make sure miniDra is displayed first
+      this.updateImages();
+
+      this.selectionMade = {
+        miniDra: false,
+        clothes: false,
+        HAIR: false,
+        sbabt: false
+    };
 
       if (this.room1) {
         this.room1.destroy();
@@ -520,6 +574,7 @@ class Malabis extends Phaser.Scene {
               this.scale.canvas.style.marginLeft = ''; // Réinitialiser à la valeur par défaut
           }
       });
+      
   }   
 
 
