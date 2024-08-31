@@ -508,8 +508,6 @@ ChangeShoes(sho) {
     this.sabat.setTexture(sho);
     this.check = 4;
     this.selectionMade.sbabt = true; // Mark shoes as selected
-   
-    this.valide.on('pointerdown', () => this.valider());
 }
 
 
@@ -715,7 +713,11 @@ if (this.stagenum > parseInt(this.selectedStage.slice(-1))) {
     // this.cute = this.sound.add('cute')
 
     this.valide = this.add.image(270,930,'valide');
-    this.valide.setInteractive({useHandCursor:true}) 
+    this.valide.setInteractive({useHandCursor:true})
+    this.valide.on('pointerdown', () => this.valider());
+
+       
+    
   }
 
 
